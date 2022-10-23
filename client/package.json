@@ -3,11 +3,21 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@emotion/react": "^11.10.4",
+        "@emotion/styled": "^11.10.4",
+        "@mui/icons-material": "^5.10.9",
+        "@mui/material": "^5.10.9",
+        "axios": "^1.1.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-query": "^3.39.2",
+        "react-router-dom": "^6.4.2",
+        "recharts": "^2.1.15",
         "web-vitals": "^3.0.3"
     },
     "devDependencies": {
+        "eslint-plugin-react": "^7.31.10",
+        "eslint-plugin-react-hooks": "^4.6.0",
         "react-scripts": "5.0.1"
     },
     "scripts": {
@@ -33,5 +43,10 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "prettier": {
+        "semi": false,
+        "tabWidth": 4,
+        "printWidth": 100
     }
 }
