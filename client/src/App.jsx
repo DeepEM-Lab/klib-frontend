@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom"
 import { ReactQueryDevtools } from "react-query/devtools"
 import { QueryClient, QueryClientProvider } from "react-query"
 import React from "react";
+import HomePage from './pages/HomePage';
 import './App.css';
 
 
@@ -20,6 +21,7 @@ function App() {
         <React.StrictMode>
             <BrowserRouter>
                 <QueryClientProvider client={queryClient}>
+                    <HomePage />
                     <ReactQueryDevtools />
                 </QueryClientProvider>
             </BrowserRouter>
