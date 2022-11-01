@@ -28,7 +28,9 @@ let ElementButton = (
             borderRadius: 0,
             border: "0.1vw solid",
             borderColor: "green",
-            backgroundColor: ElementColors.get(elementType)
+            backgroundColor: ElementColors.get(elementType),
+            transition: "transform 0.1s ease-in-out",
+            ":hover": { transform: "scale3d(1.5, 1.5, 1)", position: "relative", zIndex: 2, borderColor: "red",}
         }}>
             <CardActionArea sx={{ py: "0.2vw", px: "0.2vw" }}>
                 <Typography color="black" fontSize="0.6vw" lineHeight="0.6vw">
@@ -37,10 +39,10 @@ let ElementButton = (
                 <Typography color="black" fontSize="2vw" lineHeight="2vw" textAlign="center">
                     {elementSymbol}
                 </Typography>
-                <Typography color="black" fontSize="0.6vw" lineHeight="0.6vw" textAlign="center" >
+                <Typography color="black" fontSize="0.6vw" lineHeight="1vw" textAlign="center" >
                     [{atomicMass}]
                 </Typography>
-                <Typography color="black" fontSize="0.5vw" lineHeight="0.5vw" textAlign="center">
+                <Typography color="black" fontSize="0.5vw" lineHeight="0.1vw" textAlign="center">
                     {elementName}
                 </Typography>
             </CardActionArea>
