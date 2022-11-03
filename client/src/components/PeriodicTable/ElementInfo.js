@@ -407,202 +407,6 @@ export const ElementInfo = {
         elementSymbol: "La",
         elementType: ElementTypes.metal
     },
-    hafnium: {
-        atomicNumber: 72,
-        atomicMass: 178.49,
-        elementName: "Hafnium",
-        elementSymbol: "Hf",
-        elementType: ElementTypes.metal
-    },
-    tantalum: {
-        atomicNumber: 73,
-        atomicMass: 180.9479,
-        elementName: "Tantalum",
-        elementSymbol: "Ta",
-        elementType: ElementTypes.metal
-    },
-    tungsten: {
-        atomicNumber: 74,
-        atomicMass: 183.85,
-        elementName: "Tungsten",
-        elementSymbol: "W",
-        elementType: ElementTypes.metal
-    },
-    rhenium: {
-        atomicNumber: 75,
-        atomicMass: 186.207,
-        elementName: "Rhenium",
-        elementSymbol: "Re",
-        elementType: ElementTypes.metal
-    },
-    osmium: {
-        atomicNumber: 76,
-        atomicMass: 190.2,
-        elementName: "Osmium",
-        elementSymbol: "Os",
-        elementType: ElementTypes.metal
-    },
-    iridium: {
-        atomicNumber: 77,
-        atomicMass: 192.22,
-        elementName: "Iridium",
-        elementSymbol: "Ir",
-        elementType: ElementTypes.metal
-    },
-    platinum: {
-        atomicNumber: 78,
-        atomicMass: 195.09,
-        elementName: "Platinum",
-        elementSymbol: "Pt",
-        elementType: ElementTypes.metal
-    },
-    gold: {
-        atomicNumber: 79,
-        atomicMass: 196.9665,
-        elementName: "Gold",
-        elementSymbol: "Au",
-        elementType: ElementTypes.metal
-    },
-    mercury: {
-        atomicNumber: 80,
-        atomicMass: 200.59,
-        elementName: "Mercury",
-        elementSymbol: "Hg",
-        elementType: ElementTypes.metal
-    },
-    thallium: {
-        atomicNumber: 81,
-        atomicMass: 204.37,
-        elementName: "Thallium",
-        elementSymbol: "Tl",
-        elementType: ElementTypes.metal
-    },
-    lead: {
-        atomicNumber: 82,
-        atomicMass: 207.2,
-        elementName: "Lead",
-        elementSymbol: "Pb",
-        elementType: ElementTypes.metal
-    },
-    bismuth: {
-        atomicNumber: 83,
-        atomicMass: 208.9804,
-        elementName: "Bismuth",
-        elementSymbol: "Bi",
-        elementType: ElementTypes.metal
-    },
-    polonium: {
-        atomicNumber: 84,
-        atomicMass: 209,
-        elementName: "Polonium",
-        elementSymbol: "Po",
-        elementType: ElementTypes.metalloid
-    },
-    astatine: {
-        atomicNumber: 85,
-        atomicMass: 210,
-        elementName: "Astatine",
-        elementSymbol: "At",
-        elementType: ElementTypes.metalloid
-    },
-    radon: {
-        atomicNumber: 86,
-        atomicMass: 222,
-        elementName: "Radon",
-        elementSymbol: "Rn",
-        elementType: ElementTypes.metalloid
-    },
-    francium: {
-        atomicNumber: 87,
-        atomicMass: 223,
-        elementName: "Francium",
-        elementSymbol: "Fr",
-        elementType: ElementTypes.metalloid
-    },
-    radium: {
-        atomicNumber: 88,
-        atomicMass: 226.0254,
-        elementName: "Radium",
-        elementSymbol: "Ra",
-        elementType: ElementTypes.metal
-    },
-    actinium: {
-        atomicNumber: 89,
-        atomicMass: 227.0278,
-        elementName: "Actinium",
-        elementSymbol: "Ac",
-        elementType: ElementTypes.metal
-    },
-    rutherfordium: {
-        atomicNumber: 104,
-        atomicMass: 261,
-        elementName: "Rutherfordium",
-        elementSymbol: "Rf",
-        elementType: ElementTypes.metal
-    },
-    dubnium: {
-        atomicNumber: 105,
-        atomicMass: 262,
-        elementName: "Dubnium",
-        elementSymbol: "Db",
-        elementType: ElementTypes.metal
-    },
-    seaborgium: {
-        atomicNumber: 106,
-        atomicMass: 263,
-        elementName: "Seaborgium",
-        elementSymbol: "Sg",
-        elementType: ElementTypes.metal
-    },
-    Bohrium: {
-        atomicNumber: 107,
-        atomicMass: 262,
-        elementName: "Bohrium",
-        elementSymbol: "Sh",
-        elementType: ElementTypes.metal
-    },
-    hassium: {
-        atomicNumber: 108,
-        atomicMass: 255,
-        elementName: "Hassium",
-        elementSymbol: "Hs",
-        elementType: ElementTypes.metal
-    },
-    Meitnerium: {
-        atomicNumber: 109,
-        atomicMass: 256,
-        elementName: "Meitnerium",
-        elementSymbol: "Mt",
-        elementType: ElementTypes.metal
-    },
-    darmstadtium: {
-        atomicNumber: 110,
-        atomicMass: 269,
-        elementName: "Darmstadtium",
-        elementSymbol: "Ds",
-        elementType: ElementTypes.metal
-    },
-    roentgenium: {
-        atomicNumber: 111,
-        atomicMass: 272,
-        elementName: "Roentgenium",
-        elementSymbol: "Rg",
-        elementType: ElementTypes.metal
-    },
-    ununbiium: {
-        atomicNumber: 112,
-        atomicMass: 277,
-        elementName: "Ununbiium",
-        elementSymbol: "Unb",
-        elementType: ElementTypes.metal
-    },
-    ununquadium: {
-        atomicNumber: 114,
-        atomicMass: 289,
-        elementName: "Ununquadium",
-        elementSymbol: "Unq",
-        elementType: ElementTypes.metal
-    },
     cerium: {
         atomicNumber: 58,
         atomicMass: 140.12,
@@ -699,6 +503,132 @@ export const ElementInfo = {
         atomicMass: 174.967,
         elementName: "Lutetium",
         elementSymbol: "Lu",
+        elementType: ElementTypes.metal
+    },
+    hafnium: {
+        atomicNumber: 72,
+        atomicMass: 178.49,
+        elementName: "Hafnium",
+        elementSymbol: "Hf",
+        elementType: ElementTypes.metal
+    },
+    tantalum: {
+        atomicNumber: 73,
+        atomicMass: 180.9479,
+        elementName: "Tantalum",
+        elementSymbol: "Ta",
+        elementType: ElementTypes.metal
+    },
+    tungsten: {
+        atomicNumber: 74,
+        atomicMass: 183.85,
+        elementName: "Tungsten",
+        elementSymbol: "W",
+        elementType: ElementTypes.metal
+    },
+    rhenium: {
+        atomicNumber: 75,
+        atomicMass: 186.207,
+        elementName: "Rhenium",
+        elementSymbol: "Re",
+        elementType: ElementTypes.metal
+    },
+    osmium: {
+        atomicNumber: 76,
+        atomicMass: 190.2,
+        elementName: "Osmium",
+        elementSymbol: "Os",
+        elementType: ElementTypes.metal
+    },
+    iridium: {
+        atomicNumber: 77,
+        atomicMass: 192.22,
+        elementName: "Iridium",
+        elementSymbol: "Ir",
+        elementType: ElementTypes.metal
+    },
+    platinum: {
+        atomicNumber: 78,
+        atomicMass: 195.09,
+        elementName: "Platinum",
+        elementSymbol: "Pt",
+        elementType: ElementTypes.metal
+    },
+    gold: {
+        atomicNumber: 79,
+        atomicMass: 196.9665,
+        elementName: "Gold",
+        elementSymbol: "Au",
+        elementType: ElementTypes.metal
+    },
+    mercury: {
+        atomicNumber: 80,
+        atomicMass: 200.59,
+        elementName: "Mercury",
+        elementSymbol: "Hg",
+        elementType: ElementTypes.metal
+    },
+    thallium: {
+        atomicNumber: 81,
+        atomicMass: 204.37,
+        elementName: "Thallium",
+        elementSymbol: "Tl",
+        elementType: ElementTypes.metal
+    },
+    lead: {
+        atomicNumber: 82,
+        atomicMass: 207.2,
+        elementName: "Lead",
+        elementSymbol: "Pb",
+        elementType: ElementTypes.metal
+    },
+    bismuth: {
+        atomicNumber: 83,
+        atomicMass: 208.9804,
+        elementName: "Bismuth",
+        elementSymbol: "Bi",
+        elementType: ElementTypes.metal
+    },
+    polonium: {
+        atomicNumber: 84,
+        atomicMass: 209,
+        elementName: "Polonium",
+        elementSymbol: "Po",
+        elementType: ElementTypes.metalloid
+    },
+    astatine: {
+        atomicNumber: 85,
+        atomicMass: 210,
+        elementName: "Astatine",
+        elementSymbol: "At",
+        elementType: ElementTypes.nonmetal
+    },
+    radon: {
+        atomicNumber: 86,
+        atomicMass: 222,
+        elementName: "Radon",
+        elementSymbol: "Rn",
+        elementType: ElementTypes.nonmetal
+    },
+    francium: {
+        atomicNumber: 87,
+        atomicMass: 223,
+        elementName: "Francium",
+        elementSymbol: "Fr",
+        elementType: ElementTypes.metal
+    },
+    radium: {
+        atomicNumber: 88,
+        atomicMass: 226.0254,
+        elementName: "Radium",
+        elementSymbol: "Ra",
+        elementType: ElementTypes.metal
+    },
+    actinium: {
+        atomicNumber: 89,
+        atomicMass: 227.0278,
+        elementName: "Actinium",
+        elementSymbol: "Ac",
         elementType: ElementTypes.metal
     },
     thorium: {
@@ -798,13 +728,112 @@ export const ElementInfo = {
         elementName: "Lawrencium",
         elementSymbol: "Lr",
         elementType: ElementTypes.metal
+    },
+    rutherfordium: {
+        atomicNumber: 104,
+        atomicMass: 261,
+        elementName: "Rutherfordium",
+        elementSymbol: "Rf",
+        elementType: ElementTypes.metal
+    },
+    dubnium: {
+        atomicNumber: 105,
+        atomicMass: 262,
+        elementName: "Dubnium",
+        elementSymbol: "Db",
+        elementType: ElementTypes.metal
+    },
+    seaborgium: {
+        atomicNumber: 106,
+        atomicMass: 263,
+        elementName: "Seaborgium",
+        elementSymbol: "Sg",
+        elementType: ElementTypes.metal
+    },
+    Bohrium: {
+        atomicNumber: 107,
+        atomicMass: 262,
+        elementName: "Bohrium",
+        elementSymbol: "Sh",
+        elementType: ElementTypes.metal
+    },
+    hassium: {
+        atomicNumber: 108,
+        atomicMass: 255,
+        elementName: "Hassium",
+        elementSymbol: "Hs",
+        elementType: ElementTypes.metal
+    },
+    Meitnerium: {
+        atomicNumber: 109,
+        atomicMass: 256,
+        elementName: "Meitnerium",
+        elementSymbol: "Mt",
+        elementType: ElementTypes.metal
+    },
+    darmstadtium: {
+        atomicNumber: 110,
+        atomicMass: 269,
+        elementName: "Darmstadtium",
+        elementSymbol: "Ds",
+        elementType: ElementTypes.metal
+    },
+    roentgenium: {
+        atomicNumber: 111,
+        atomicMass: 272,
+        elementName: "Roentgenium",
+        elementSymbol: "Rg",
+        elementType: ElementTypes.metal
+    },
+    copernicium: {
+        atomicNumber: 112,
+        atomicMass: 286.179,
+        elementName: "Copernicium",
+        elementSymbol: "Cn",
+        elementType: ElementTypes.metal
+    },
+    nihonium: {
+        atomicNumber: 113,
+        atomicMass: 286.182,
+        elementName: "Nihonium",
+        elementSymbol: "Nh",
+        elementType: ElementTypes.metal
+    },
+    flerovium: {
+        atomicNumber: 114,
+        atomicMass: 290.192,
+        elementName: "Flerovium",
+        elementSymbol: "Fl",
+        elementType: ElementTypes.metal
+    },
+    moscovium: {
+        atomicNumber: 115,
+        atomicMass: 290.196,
+        elementName: "Moscovium",
+        elementSymbol: "Mc",
+        elementType: ElementTypes.metal
+    },
+    livermorium: {
+        atomicNumber: 116,
+        atomicMass: 293.205,
+        elementName: "Livermorium",
+        elementSymbol: "Lv",
+        elementType: ElementTypes.metal
+    },
+    tennessine: {
+        atomicNumber: 117,
+        atomicMass: 294.211,
+        elementName: "Tennessine",
+        elementSymbol: "Ts",
+        elementType: ElementTypes.nonmetal
+    },
+    oganesson: {
+        atomicNumber: 118,
+        atomicMass: 295.216,
+        elementName: "Oganesson",
+        elementSymbol: "Og",
+        elementType: ElementTypes.nonmetal
     }
-
-
-
-
-
-    //TODO: fill in all element infos.
 }
 
 //TODO arrange elements based on periodic table
@@ -823,7 +852,7 @@ export const allElements = [
     ElementInfo.cesium, ElementInfo.barium, ElementInfo.lanthanum, ElementInfo.hafnium, ElementInfo.tantalum, ElementInfo.tungsten, ElementInfo.rhenium, ElementInfo.osmium, ElementInfo.iridium, ElementInfo.platinum,
     ElementInfo.gold, ElementInfo.mercury, ElementInfo.thallium, ElementInfo.lead, ElementInfo.bismuth, ElementInfo.polonium, ElementInfo.astatine, ElementInfo.radon, //Row 6
     ElementInfo.francium, ElementInfo.radium, ElementInfo.actinium, ElementInfo.rutherfordium, ElementInfo.dubnium, ElementInfo.seaborgium, ElementInfo.Bohrium, ElementInfo.hassium, ElementInfo.Meitnerium, ElementInfo.darmstadtium, 
-    ElementInfo.roentgenium, ElementInfo.ununbiium, null, ElementInfo.ununquadium, null, null, null, null, //Row 7
+    ElementInfo.roentgenium, ElementInfo.copernicium, ElementInfo.nihonium, ElementInfo.flerovium, ElementInfo.moscovium, ElementInfo.livermorium, ElementInfo.tennessine, ElementInfo.oganesson, //Row 7
     null, null, null, ElementInfo.cerium, ElementInfo.praseodymium, ElementInfo.neodymium, ElementInfo.promethium, ElementInfo.samarium, ElementInfo.europium, ElementInfo.gadolinium,
     ElementInfo.terbium, ElementInfo.dysprosium, ElementInfo.holmium, ElementInfo.erbium, ElementInfo.thulium, ElementInfo.ytterbium, ElementInfo.lutetium, null, //Row 8
     null, null, null, ElementInfo.thorium, ElementInfo.protactinium, ElementInfo.uranium, ElementInfo.neptunium, ElementInfo.plutonium, ElementInfo.americium, ElementInfo.curium, ElementInfo.berkelium, ElementInfo.californium,
