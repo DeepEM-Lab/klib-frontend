@@ -1,4 +1,5 @@
 import { Box, Grid, Paper, Typography } from "@mui/material"
+import PeriodicTable from "../components/PeriodicTable/PeriodicTable"
 import PageParent from "../structures/PageParent"
 
 const HomePage = () => {
@@ -11,6 +12,11 @@ const HomePage = () => {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         Vitae proin sagittis nisl rhoncus mattis. Vulputate eu scelerisque felis imperdiet.
+                    </Paper>
+                </Grid>
+                <Grid item xs={10}>
+                    <Paper elevation={5} sx={{ padding: "1vw" }}>
+                        <PeriodicTable />
                     </Paper>
                 </Grid>
             </Grid>
