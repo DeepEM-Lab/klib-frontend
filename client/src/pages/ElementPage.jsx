@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Scatter } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
+import PageParent from "../structures/PageParent";
 import "./ElementPage.css";
 
 
 function ElementPage() {
     const navigate = useNavigate();
-
+    const [isShow, setIsShow] = useState("false");
+    const [elementShowed, setElementShowed] = useState();
 
     useEffect(() => {
-        // TODO: fetch information from database and assign values to states
+        // TODO: fetch information from database and assign values to states --> change to react-query
 
     });
 
@@ -134,40 +136,50 @@ function ElementPage() {
     };
     
 
+    const handleCheck = (e) => {
+        console.log(e.target.value);
+        
+        if (isShow === "false") {
+            setElementShowed("abc");
+        }
+
+    };
+
+
     return (
-        <div className="element-page">
-            <div className="top-bar">
-                <button onClick={ () => navigate("/", {replace: true}) }>back</button>
-                <div className="bar-content">
-                    <img src="https://lh5.googleusercontent.com/W8cy8K7nJzzJCl2I3AORi8vzZk4-Q32gwgf33xNYfVZrYSqVEl6tekmZnV-O6ZPoB6fVpg=w16383)" alt="" />
-                    <p>Here to place Lab's LOGO and top bar</p>
+        <PageParent>
+            <div className="element-page">
+                <div className="top-bar">
+                    <button onClick={ () => navigate("/", {replace: true}) }>back</button>
+                </div>
+                <div className="middle">
+                    <div className="element-detail">
+                        <p>Atomic Number: {atomicNumber}</p> 
+                        <p>Atomic Mass: {atomicMass}</p>
+                        <p>Name: {elementName}</p>
+                        <p>Symbol: {elementSymbol}</p>
+                        <p>Type: {elementType}</p>
+                        <input type="checkbox" value={isShow} onClick={ (e) => handleCheck(e) } /> <span>Element</span>
+                        <p>{elementShowed}</p>
+                        <button onClick={() => addLine()}>Click me to add a new line</button>
+                        <button onClick={() => removeLine()}>remove a line</button>
+                    </div>
+                    <div className="graph">
+                        <Scatter data={data} />
+                    </div>
+                    <div className="table">
+                        <ul>
+                            <li>equipment 1</li>
+                            <li>equipment 2</li>
+                            <li>equipment 3</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="bottom">
+                    <p>about section: source data...</p>
                 </div>
             </div>
-            <div className="middle">
-                <div className="element-detail">
-                    <p>Atomic Number: {atomicNumber}</p> 
-                    <p>Atomic Mass: {atomicMass}</p>
-                    <p>Name: {elementName}</p>
-                    <p>Symbol: {elementSymbol}</p>
-                    <p>Type: {elementType}</p>
-                    <button onClick={() => addLine()}>Click me to add a new line</button>
-                    <button onClick={() => removeLine()}>remove a line</button>
-                </div>
-                <div className="graph">
-                    <Scatter data={data} />
-                </div>
-                <div className="table">
-                    <ul>
-                        <li>equipment 1</li>
-                        <li>equipment 2</li>
-                        <li>equipment 3</li>
-                    </ul>
-                </div>
-            </div>
-            <div className="bottom">
-                <p>about section: source data...</p>
-            </div>
-        </div>
+        </PageParent>
     );
 }
 
