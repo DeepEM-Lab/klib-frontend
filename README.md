@@ -10,3 +10,6 @@ DeepEM Klib frontend repository
 
 ### run app
 > npm run start
+
+### deploy app to github page
+> npm run deploy -m \<commit message\>
