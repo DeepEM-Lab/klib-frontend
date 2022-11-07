@@ -19,8 +19,6 @@ import {
 
 function ElementPage() {
     const navigate = useNavigate();
-    const [isShow, setIsShow] = useState("false");
-    const [elementShowed, setElementShowed] = useState();
     
     useEffect(() => {
         // TODO: fetch information from database and assign values to states --> change to react-query
@@ -184,11 +182,6 @@ function ElementPage() {
         
     };
 
-    const removeLine = () => {
-        const newDataset = [...dataset];
-        newDataset.pop();
-        setDataset(newDataset);
-    };
     
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -204,7 +197,7 @@ function ElementPage() {
                     height: '20px',
                     margin: 10,
                 }} >
-                    <Button style={{ height: 20 }} onClick={ () => navigate("/klib-lab", {replace: true}) }>back</Button>
+                    <Button style={{ height: 20 }} onClick={ () => navigate("/klib-frontend", {replace: true}) }>back</Button>
                 </Box>
                 <Box className="middle" sx={{
                     pt: '100px',
@@ -222,7 +215,7 @@ function ElementPage() {
                             display: "flex",
                             flexDirection: "column",
                             height: '100px',
-                            overflow: "auto",
+                            overflowY: "scroll",
                             border: "2px white"
                         }} >
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 0) } />} label="BaMnO3" />
