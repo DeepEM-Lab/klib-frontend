@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Scatter } from "react-chartjs-2";
-import Chart from 'chart.js/auto';
+import Checkbox from '@mui/material/Checkbox';
+import { Container, Box } from "@mui/material";
+import { FormGroup, FormControlLabel } from "@mui/material";
 import PageParent from "../structures/PageParent";
-import "./ElementPage.css";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
 
 
 function ElementPage() {
     const navigate = useNavigate();
     const [isShow, setIsShow] = useState("false");
     const [elementShowed, setElementShowed] = useState();
-
+    
     useEffect(() => {
         // TODO: fetch information from database and assign values to states --> change to react-query
-
+        
     });
-
-
-
+    
+    
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+    );
+    
     // get element information of element by passing state between routers
     const { state } = useLocation();
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = state;
@@ -25,16 +45,32 @@ function ElementPage() {
     console.log(atomicNumber, atomicMass, elementName, elementSymbol, elementType);
 
     const options = {
-        
         title: {
             display: true,
-            text: 'Average Rainfall per month',
+            text: elementName,
             fontSize: 20
         },
+        scales: {
+            y: {
+                ticks: {
+                    min: 0,
+                    max: 100,
+                    callback: function(value) {
+                        return value + "%"                      // what is the maximum value?
+                    }
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: "Percentage"
+                }
+            }
+        },
         legend: {
-            display: true,
-            position: 'right'
+            labels: {
+              fontSize: 25
+            }
         }
+  
     };
     
     // TODO: deal with fixed label issue
@@ -135,6 +171,8 @@ function ElementPage() {
         setDataset(newDataset);
     };
     
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 
     const handleCheck = (e) => {
         console.log(e.target.value);
@@ -148,12 +186,24 @@ function ElementPage() {
 
     return (
         <PageParent>
-            <div className="element-page">
-                <div className="top-bar">
-                    <button onClick={ () => navigate("/", {replace: true}) }>back</button>
-                </div>
-                <div className="middle">
-                    <div className="element-detail">
+            <Container className="element-page" sx={{ display: 'block' }} >
+                <Box className="top-bar" sx={{ 
+                    position: 'fixed',
+                    display: 'flex',
+                    top: 0,
+                    width: '100%',
+                    height: '20px',
+                    margin: 10,
+                }} >
+                    <button style={{ height: 20 }} onClick={ () => navigate("/", {replace: true}) }>back</button>
+                </Box>
+                <Box className="middle" sx={{
+                    pt: '100px',
+                    display: 'flex'
+                }} >
+                    <Box className="element-detail" sx={{
+
+                    }} >
                         <p>Atomic Number: {atomicNumber}</p> 
                         <p>Atomic Mass: {atomicMass}</p>
                         <p>Name: {elementName}</p>
@@ -161,24 +211,29 @@ function ElementPage() {
                         <p>Type: {elementType}</p>
                         <input type="checkbox" value={isShow} onClick={ (e) => handleCheck(e) } /> <span>Element</span>
                         <p>{elementShowed}</p>
-                        <button onClick={() => addLine()}>Click me to add a new line</button>
-                        <button onClick={() => removeLine()}>remove a line</button>
-                    </div>
-                    <div className="graph">
-                        <Scatter data={data} />
-                    </div>
-                    <div className="table">
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox {...label} onChange={() => addLine()} />} label="add a new line" />
+                            <FormControlLabel control={<Checkbox {...label} onChange={() => removeLine()} />} label="remove a line"  />
+                        </FormGroup>
+                    </Box>
+                    <Box className="graph" sx={{
+                        width: 6/10,
+                        height: '500px'
+                    }} >
+                        <Scatter data={data} options={options} />
+                    </Box>
+                    <Box className="table">
                         <ul>
                             <li>equipment 1</li>
                             <li>equipment 2</li>
                             <li>equipment 3</li>
                         </ul>
-                    </div>
-                </div>
-                <div className="bottom">
+                    </Box>
+                </Box>
+                <Box className="bottom">
                     <p>about section: source data...</p>
-                </div>
-            </div>
+                </Box>
+            </Container>
         </PageParent>
     );
 }
