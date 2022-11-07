@@ -1,5 +1,6 @@
-import { AppBar, Toolbar, Grid, Link, Typography, IconButton, useTheme, Menu, MenuItem } from "@mui/material"
+import { AppBar, Toolbar, Grid, Typography, IconButton, useTheme, Menu, MenuItem, Button } from "@mui/material"
 import { LightMode, NightsStay } from "@mui/icons-material"
+import { Link } from "react-router-dom"
 
 
 
@@ -27,14 +28,14 @@ const NavigationBar = (
                     <Grid item>
                         <Grid container spacing={3} alignItems="center">
                             <Grid item>
-                                <Typography display="block" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
-                                    <Link underline="none" href="/" >DeepEm Klib</Link>
+                                <Typography display="block" color="primary" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
+                                    DeepEm Klib
                                 </Typography>
                             </Grid>
                             <Grid item width="2rem"/>
                             {menu.map((page, i) => (
                                 <Grid item key={i}>
-                                    <Link underline="none" href={page.path} color="secondary">{page.name}</Link>
+                                    <Button component={Link} to={page.path} color="secondary">{page.name}</Button>
                                 </Grid>
                             ))}
                         </Grid>

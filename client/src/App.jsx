@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
 import { ReactQueryDevtools } from "react-query/devtools"
 import { QueryClient, QueryClientProvider } from "react-query"
 import React from "react";
@@ -16,12 +16,16 @@ const queryClient = new QueryClient({
     },
 })
 
+console.log("APPLICATION PUBLIC URL:", process.env.PUBLIC_URL)
+
 function App() {
     return (
         <React.StrictMode>
-            <BrowserRouter>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <QueryClientProvider client={queryClient}>
-                    <HomePage />
+                    <Routes>
+                        <Route path="/" element={<HomePage />}/>
+                    </Routes>
                     <ReactQueryDevtools />
                 </QueryClientProvider>
             </BrowserRouter>
