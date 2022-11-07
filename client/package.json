@@ -4,17 +4,17 @@
     "homepage": "https://deepem-lab.github.io/klib-frontend",
     "private": true,
     "dependencies": {
-        "@emotion/react": "^11.10.4",
-        "@emotion/styled": "^11.10.4",
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
         "@mui/icons-material": "^5.10.9",
-        "@mui/material": "^5.10.9",
-        "axios": "^1.1.2",
+        "@mui/material": "^5.10.12",
+        "axios": "^1.1.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-query": "^3.39.2",
-        "react-router-dom": "^6.4.2",
-        "recharts": "^2.1.15",
-        "web-vitals": "^3.0.3"
+        "react-router-dom": "^6.4.3",
+        "recharts": "^2.1.16",
+        "web-vitals": "^3.0.4"
     },
     "devDependencies": {
         "eslint-plugin-react": "^7.31.10",
