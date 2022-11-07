@@ -24,7 +24,7 @@ function App() {
             <BrowserRouter>
                 <QueryClientProvider client={queryClient}>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
+                        <Route path="/klib-frontend" element={<HomePage />} />
                         <Route path="/dev-tools" element={<ReactQueryDevtools />} />
                         <Route path="/elements/*" element={<ElementPage />} />
                     </Routes>
