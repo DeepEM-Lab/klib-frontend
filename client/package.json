@@ -1,6 +1,7 @@
 {
     "name": "client",
     "version": "0.1.0",
+    "homepage": "https://deepem-lab.github.io/klib-frontend",
     "private": true,
     "dependencies": {
         "@emotion/react": "^11.10.4",
@@ -20,9 +21,12 @@
     "devDependencies": {
         "eslint-plugin-react": "^7.31.10",
         "eslint-plugin-react-hooks": "^4.6.0",
+        "gh-pages": "^4.0.0",
         "react-scripts": "5.0.1"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build -b deployment",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",

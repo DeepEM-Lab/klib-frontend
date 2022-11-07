@@ -10,7 +10,6 @@ const ElementColors = new Map([
 ])
 
 
-//TODO: Hover zoom animation
 let ElementButton = (
 /**
 @type {{
