@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/klib-frontend/static/css/main.073c9b0a.css",
+    "main.js": "/klib-frontend/static/js/main.80d0a818.js",
+    "index.html": "/klib-frontend/index.html",
+    "main.073c9b0a.css.map": "/klib-frontend/static/css/main.073c9b0a.css.map",
+    "main.80d0a818.js.map": "/klib-frontend/static/js/main.80d0a818.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.80d0a818.js"
+  ]
+}
