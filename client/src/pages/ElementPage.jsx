@@ -215,7 +215,8 @@ function ElementPage() {
                             display: "flex",
                             flexDirection: "column",
                             height: '150px',
-                            overflow: "scroll",
+                            overflowY: "scroll",
+                            overflowX: "hidden",
                             border: "2px white"
                         }} >
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 0) } />} label="BaMnO3" />
