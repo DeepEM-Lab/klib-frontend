@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Scatter } from "react-chartjs-2";
 import Checkbox from '@mui/material/Checkbox';
 import { Container, Box, Button } from "@mui/material";
-import { FormGroup, FormControlLabel } from "@mui/material";
+import { FormControlLabel, List } from "@mui/material";
 import PageParent from "../structures/PageParent";
 import {
     Chart as ChartJS,
@@ -211,11 +211,11 @@ function ElementPage() {
                         <p>Name: {elementName}</p>
                         <p>Symbol: {elementSymbol}</p>
                         <p>Type: {elementType}</p>
-                        <FormGroup sx={{
+                        <List sx={{
                             display: "flex",
                             flexDirection: "column",
-                            height: '100px',
-                            overflowY: "scroll",
+                            height: '150px',
+                            overflow: "scroll",
                             border: "2px white"
                         }} >
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 0) } />} label="BaMnO3" />
@@ -224,7 +224,7 @@ function ElementPage() {
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 3) } />} label="Hex-SMO"  />
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 4) } />} label="Hex-YMnO3" />
                             <FormControlLabel control={<Checkbox {...label} onChange={ (e) => addLine(e, 5) } />} label="LaMnO3"  />
-                        </FormGroup>
+                        </List>
                     </Box>
                     <Box className="graph" sx={{
                         width: 6/10,
