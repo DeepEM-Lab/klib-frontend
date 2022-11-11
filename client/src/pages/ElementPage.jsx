@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Scatter } from "react-chartjs-2";
+// import { Scatter } from "react-chartjs-2";
 import Checkbox from '@mui/material/Checkbox';
 import { Container, Box, Button } from "@mui/material";
 import { FormControlLabel, List } from "@mui/material";
 import PageParent from "../structures/PageParent";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+// import {
+//     Chart as ChartJS,
+//     CategoryScale,
+//     LinearScale,
+//     PointElement,
+//     LineElement,
+//     Title,
+//     Tooltip,
+//     Legend,
+// } from 'chart.js';
+import { VictoryZoomContainer, VictoryChart, VictoryScatter, VictoryLegend } from "victory";
 
 
 function ElementPage() {
     const navigate = useNavigate();
+    const [legendData, setLegendData] = useState([]);
+    const [pointData, setPointData] = useState([]);
+
     
     useEffect(() => {
         // TODO: fetch information from database and assign values to states --> change to react-query
@@ -26,15 +30,15 @@ function ElementPage() {
     });
     
     
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-    );
+    // ChartJS.register(
+    //     CategoryScale,
+    //     LinearScale,
+    //     PointElement,
+    //     LineElement,
+    //     Title,
+    //     Tooltip,
+    //     Legend
+    // );
     
     // get element information of element by passing state between routers
     const { state } = useLocation();
@@ -42,36 +46,36 @@ function ElementPage() {
     
     console.log(atomicNumber, atomicMass, elementName, elementSymbol, elementType);
 
-    const options = {
-        title: {
-            display: true,
-            text: elementName,
-            fontSize: 20
-        },
-        scales: {
-            y: {
-                ticks: {
-                    min: 0,
-                    max: 100,
-                    callback: function(value) {
-                        return value + "%"                      // what is the maximum value?
-                    }
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: "Percentage"
-                }
-            }
-        },
-        legend: {
-            labels: {
-              fontSize: 25
-            }
-        }
-  
-    };
+    // const options = {
+    //     title: {
+    //         display: true,
+    //         text: elementName,
+    //         fontSize: 20
+    //     },
+    //     scales: {
+    //         y: {
+    //             ticks: {
+    //                 min: 0,
+    //                 max: 100,
+    //                 callback: function(value) {
+    //                     return value + "%"                      // what is the maximum value?
+    //                 }
+    //             },
+    //             scaleLabel: {
+    //                 display: true,
+    //                 labelString: "Percentage"
+    //             }
+    //         }
+    //     },
+    //     legend: {
+    //         labels: {
+    //           fontSize: 25
+    //         }
+    //     }
+    // };
     
     // TODO: deal with fixed label issue
+    
     const labels = [];
     for (var i=-6; i<=36; i++)
     {
@@ -101,89 +105,126 @@ function ElementPage() {
         {
             label: 'BaMnO3',
             data: dataBaMnO3,
-            borderColor: 'rgb(139,0,0)',
+            borderColor: 'tomato',
             backgroundColor: 'rgba(139,0,0, 0.5)',
             yAxisID: 'y',
         },
         {
             label: 'CaMnO3',
             data: dataCaMnO3,
-            borderColor: 'rgb(222,184,135)',
+            borderColor: 'gold',
             backgroundColor: 'rgba(222,184,135, 0.5)',
             yAxisID: 'y',
         },
         {
             label: 'Cubic-SrMnO3',
             data: dataSrMnO3,
-            borderColor: 'rgb(255,127,80)',
+            borderColor: 'blue',
             backgroundColor: 'rgba(255,127,80, 0.5)',
             yAxisID: 'y',
         },
         {
             label: 'Hex-SMO',
             data: dataSMO,
-            borderColor: 'rgb(100, 130, 17)',
+            borderColor: 'red',
             backgroundColor: 'rgba(100, 130, 17, 0.5)',
             yAxisID: 'y',
         },
         {
             label: 'Hex-YMnO3',
             data: dataYMnO3,
-            borderColor: 'rgb(255,215,0)',
+            borderColor: 'yellow',
             backgroundColor: 'rgba(255,215,0, 0.5)',
             yAxisID: 'y',
         },
         {
             label: 'LaMnO3',
             data: dataLaMnO3,
-            borderColor: 'rgb(0,128,0)',
+            borderColor: 'green',
             backgroundColor: 'rgba(0,128,0, 0.5)',
             yAxisID: 'y',
         },
     ];
+
+
+
+    
     const [dataset, setDataset] = useState([
         {
             label: 'empty'
         }
     ]);
 
-    const data = {
-        labels,
-        datasets: dataset,
-    };
-      
+    // const data = {
+    //     labels,
+    //     datasets: dataset,
+    // };
+   
+    
     // TODO: Change to element checkboxes later
+    
     const addLine = (e, num) => {
         console.log(e);
+
+        
         if (!e.target.checked)
         {
             const newDataset = [];
-            for (var i=0; i<dataset.length; i++)
+            const newLegendData = [];
+            const newPointData = [];
+            
+            // TODO: add color into point data
+
+            for (var i = 0; i < dataset.length; i++)
             {
                 if (dataset[i].label !== dataArr[num].label)
                 {
                     newDataset.push(dataset[i]);
+                    newPointData.push([dataset[i].data, dataset[i].borderColor]);
+                    newLegendData.push({ name: dataset[i].label, symbol: { fill: dataset[i].borderColor } } );
                 }
             }
+
             setDataset(newDataset);
+            setLegendData(newLegendData);
+            setPointData(newPointData);
         }
         else
         {
             let newDataset = [...dataset,
                 dataArr[num]
             ];
+
+            let newPointData = [...pointData, [dataArr[num].data, dataArr[num].borderColor]];
+            let newLegendData = [...legendData, { name: dataArr[num].label, symbol: { fill: dataArr[num].borderColor } }];
+
             if (newDataset[0].label === "empty")
             {
                 newDataset.shift();
             }
+            
             console.log(newDataset);
+            console.log(newPointData);
+
             setDataset(newDataset);
+            setLegendData(newLegendData);
+            setPointData(newPointData);
         }
-        
     };
 
     
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+    const graphs = pointData.map((data) => {
+        return <VictoryScatter key={data[0]}
+            data={ data[0] }
+            style={{
+                data: {
+                    fill: data[1]
+                }
+            }}
+        />
+    });
 
 
     return (
@@ -231,7 +272,31 @@ function ElementPage() {
                         width: 6/10,
                         height: '500px'
                     }} >
-                        <Scatter data={data} options={options} />
+                        {/* <Scatter data={data} options={options} /> */}
+                        <VictoryChart
+                            containerComponent={<VictoryZoomContainer />}
+                        >
+                            
+                            {/* <VictoryScatter 
+                                data={ pointData }
+                            /> */}
+                            {
+                                graphs
+                            }
+                        </VictoryChart>
+                        <VictoryLegend x={125} y={0}
+                            orientation="horizontal"
+                            itemsPerRow={4}
+                            title={"elements"}
+                            centerTitle
+                            style={{ 
+                                border: { stroke: "black" }, 
+                                title: {fontSize: 12 },
+                                data: { fill: "blue" },
+                                labels: { fill: "navy", fontSize: 10 },
+                            }}
+                            data={ legendData }
+                        />
                     </Box>
                     <Box className="table">
                         <ul>

@@ -26,7 +26,7 @@ function App() {
                     <Routes>
                         <Route path="/klib-frontend" element={<HomePage />} />
                         <Route path="/dev-tools" element={<ReactQueryDevtools />} />
-                        <Route path="/klib-lab/elements/*" element={<ElementPage />} />
+                        <Route path="/klib-frontend/elements/*" element={<ElementPage />} />
                     </Routes>
                 </QueryClientProvider>
             </BrowserRouter>
