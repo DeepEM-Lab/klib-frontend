@@ -25,8 +25,7 @@ let ElementButton = (
     let { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = props;
 
     const handleClick = () => {
-        console.log( { atomicNumber, atomicMass, elementName, elementSymbol, elementType } );
-        navigate(`/klib-frontend/elements/${elementSymbol}`, { state: { atomicNumber, atomicMass, elementName, elementSymbol, elementType } });
+        navigate(`/element/${elementName}`);
     };
 
     return (

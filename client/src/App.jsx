@@ -24,13 +24,13 @@ function App() {
             <BrowserRouter>
                 <QueryClientProvider client={queryClient}>
                     <Routes>
-                        <Route path="/klib-frontend" element={<HomePage />} />
-                        <Route path="/dev-tools" element={<ReactQueryDevtools />} />
-                        <Route path="/klib-frontend/elements/*" element={<ElementPage />} />
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/element/*" element={<ElementPage />} />
                     </Routes>
+                    <ReactQueryDevtools />
                 </QueryClientProvider>
             </BrowserRouter>
-        </React.StrictMode >
+        </React.StrictMode>
     )
 }
 
