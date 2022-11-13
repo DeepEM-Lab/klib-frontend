@@ -1,5 +1,6 @@
 import { Card, CardActionArea, Typography } from "@mui/material"
 import { green, orange, pink } from "@mui/material/colors"
+import { useNavigate } from "react-router-dom"
 
 
 const ElementColors = new Map([
@@ -8,7 +9,7 @@ const ElementColors = new Map([
     ["nonmetal", green[200]]
 ])
 
-//TODO: Hover zoom animation
+
 let ElementButton = (
 /**
 @type {{
@@ -19,19 +20,29 @@ let ElementButton = (
     elementType: string; //ElementTypes
 }}
 */ props) => {
-    let { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = props
+    const navigate = useNavigate();
+
+    let { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = props;
+
+    const handleClick = () => {
+        navigate(`/element/${elementName}`);
+    };
 
     return (
-        <Card sx={{
-            width: "100%",
-            aspectRatio: "1",
-            borderRadius: 0,
-            border: "0.1vw solid",
-            borderColor: "green",
-            backgroundColor: ElementColors.get(elementType),
-            transition: "transform 0.1s ease-in-out",
-            ":hover": { transform: "scale3d(1.5, 1.5, 1)", position: "relative", zIndex: 2, borderColor: "red",}
-        }}>
+        <Card
+            onClick={() => handleClick()}
+
+            sx={{
+                width: "100%",
+                aspectRatio: "1",
+                borderRadius: 0,
+                border: "0.1vw solid",
+                borderColor: "green",
+                backgroundColor: ElementColors.get(elementType),
+                transition: "transform 0.1s ease-in-out",
+                ":hover": { transform: "scale3d(1.5, 1.5, 1)", position: "relative", zIndex: 2, borderColor: "red",}
+            }}
+        >
             <CardActionArea sx={{ py: "0.2vw", px: "0.2vw" }}>
                 <Typography color="black" fontSize="0.6vw" lineHeight="0.6vw">
                     {atomicNumber}

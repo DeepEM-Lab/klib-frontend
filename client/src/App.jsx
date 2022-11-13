@@ -1,7 +1,8 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
-import { ReactQueryDevtools } from "react-query/devtools"
-import { QueryClient, QueryClientProvider } from "react-query"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from "react-query";
 import React from "react";
+import ElementPage from "./pages/ElementPage";
 import HomePage from './pages/HomePage';
 import './App.css';
 
@@ -14,7 +15,7 @@ const queryClient = new QueryClient({
             staleTime: 60 * 1000, // 1 minute
         },
     },
-})
+});
 
 console.log("APPLICATION PUBLIC URL:", process.env.PUBLIC_URL)
 
@@ -24,12 +25,13 @@ function App() {
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <QueryClientProvider client={queryClient}>
                     <Routes>
-                        <Route path="/" element={<HomePage />}/>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/element/:element" element={<ElementPage />} />
                     </Routes>
                     <ReactQueryDevtools />
                 </QueryClientProvider>
             </BrowserRouter>
-        </React.StrictMode >
+        </React.StrictMode>
     )
 }
 
