@@ -11,7 +11,7 @@ import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
 function ElementPage() {
     const navigate = useNavigate();
     const params = useParams()
-    const element = params['*'] ? params['*'].toLocaleLowerCase() : "hydrogen"
+    const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
     // @ts-ignore
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
     let dataLabels = ["BaMnO3", "CaMnO3", "Cubic-SrMnO3", "Hex-SMO", "Hex-YMnO3", "LaMnO3"]
