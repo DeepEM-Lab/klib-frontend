@@ -34,7 +34,7 @@ const getDomain = (/** @type{{x: number, y: number}[][]}*/ dataSets) => {
         })
     })
 
-    return { x: [minX, maxX], y: [minY - 0.5, maxY + 0.5 * dataSets.length + 1] }
+    return { x: [minX, maxX], y: [minY - 0.5, maxY + 0.5 * dataSets.length +5] }
 }
 
 const Graph = (
@@ -48,10 +48,10 @@ const Graph = (
     const allDomains = useMemo(() => getDomain(dataSets), [dataSets])
     const theme = useTheme()
     //set maximum rendering points
-    const maxPoints = Math.ceil(240 / dataSets.length)
+    const maxPoints = Math.ceil(2000 / dataSets.length)
     const darkMode = theme.palette.mode === "dark"
 
-    let [domain, setDomain] = useState(getDomain(dataSets).x)
+    let [domain, setDomain] = useState([-20, 50])
     let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
     let [animating, setAnimating] = useState(lines)
 
@@ -75,6 +75,14 @@ const Graph = (
         return filtered
     }
 
+    const getY = () =>{
+        let count = 0
+        lines.forEach((d)=>{
+            count += d ? 1 : 0
+        })
+        return count
+    }
+
     return (
         <Grid container>
             <Grid item xs={2}>
@@ -95,10 +103,10 @@ const Graph = (
             </Grid>
             <Grid item xs={10} sx={{ border: "1px solid", borderRadius: "20px" }}>
                 <VictoryChart
-                    height={720}
+                    height={500 + getY()*100}
                     width={1280}
                     // @ts-ignore
-                    domain={allDomains}
+                    domain={{x: [-5, 40], y: [0, 0.65+getY()*0.4]}}
                     domainPadding={{ x: [50, 50] }}
                     containerComponent={
                         <VictoryZoomContainer
@@ -133,35 +141,35 @@ const Graph = (
                                 } : false}
                                 key={i}
                                 style={{
-                                    data: { stroke: lineColors[i] }
+                                    data: { stroke: lineColors[i], strokeWidth: 2.3333}
                                 }}
                                 data={getData(d)}
                                 interpolation="catmullRom"
-                                y={(data) => data.y + 0.5 * i}
+                                y={(data) => data.y + 0.4 * i}
                             />
                         )),
-                        dataSets.map((d, i) => (
-                            lines[i] && <VictoryScatter
-                                size={6}
-                                key={i}
-                                data={getData(d)}
-                                labels={({ datum }) => `${datum.x.toFixed(3)}, ${datum.y.toFixed(3)}`}
-                                labelComponent={<VictoryTooltip
-                                    dy={-16}
-                                    flyoutStyle={{
-                                        fill: "white",
-                                        fillOpacity: "0.9",
-                                        stroke: theme.palette.secondary.main
-                                    }}
-                                    flyoutWidth={120}
-                                    style={[{ fill: "black", fontSize: 16, fontFamily: theme.typography.fontFamily }]}
-                                />}
-                                y={(data) => data.y + 0.5 * i}
-                                style={{
-                                    data: { fill: lineColors[i] }
-                                }}
-                            />
-                        ))
+                        // dataSets.map((d, i) => (
+                        //     lines[i] && <VictoryScatter
+                        //         size={6}
+                        //         key={i}
+                        //         data={getData(d)}
+                        //         labels={({ datum }) => `${datum.x.toFixed(3)}, ${datum.y.toFixed(3)}`}
+                        //         labelComponent={<VictoryTooltip
+                        //             dy={-16}
+                        //             flyoutStyle={{
+                        //                 fill: "white",
+                        //                 fillOpacity: "0.9",
+                        //                 stroke: theme.palette.secondary.main
+                        //             }}
+                        //             flyoutWidth={120}
+                        //             style={[{ fill: "black", fontSize: 16, fontFamily: theme.typography.fontFamily }]}
+                        //         />}
+                        //         y={(data) => data.y + 0.5 * i}
+                        //         style={{
+                        //             data: { fill: lineColors[i] }
+                        //         }}
+                        //     />
+                        // ))
                     ]}
 
                     <VictoryAxis
@@ -172,7 +180,7 @@ const Graph = (
                             tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
                         }}
                     />
-                    <VictoryLegend x={1000} y={0}
+                    <VictoryLegend x={1000} y={300}
                         orientation="horizontal"
                         itemsPerRow={2}
                         title={"Elements"}
