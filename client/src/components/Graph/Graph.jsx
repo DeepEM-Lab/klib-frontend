@@ -1,5 +1,5 @@
 // @ts-ignore
-import { VictoryChart, VictoryTooltip, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend } from "victory"
+import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
 import { useTheme, Grid } from "@mui/material"
 import { useMemo, useState } from "react"
 import GraphToggles from "./GraphToggles"
@@ -58,6 +58,7 @@ const Graph = (
     const getData = (/**@type{{x: number, y: number}[]}*/ data) => {
         const startIndex = data.findIndex((d) => d.x >= domain[0]);
         const endIndex = data.findIndex((d) => d.x > domain[1]);
+        
         let filtered = data.slice(startIndex > 0 ? startIndex - 1 : 0, endIndex !== -1 ? endIndex + 1 : data.length);
         if (filtered.length > maxPoints) {
             const k = Math.pow(2, Math.ceil(Math.log2(filtered.length / maxPoints)));
@@ -107,10 +108,9 @@ const Graph = (
                     width={1280}
                     // @ts-ignore
                     domain={{x: [-5, 40], y: [0, 0.65+getY()*0.4]}}
-                    domainPadding={{ x: [50, 50] }}
+
                     containerComponent={
                         <VictoryZoomContainer
-                            zoomDimension="x"
                             minimumZoom={{ x: 0.1 }}
                             allowZoom={true}
                             // @ts-ignore
@@ -180,7 +180,18 @@ const Graph = (
                             tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
                         }}
                     />
-                    <VictoryLegend x={1000} y={300}
+                    <VictoryAxis
+                        dependentAxis
+                        crossAxis={false}
+                        offsetX={50}
+                        tickValues={[null]}
+                        label="FJJBJSJFJDJS"
+                        style={{
+                            axis: { stroke: "gray" },
+                            tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
+                        }}
+                    />
+                    <VictoryLegend x={1000} y={0}
                         orientation="horizontal"
                         itemsPerRow={2}
                         title={"Elements"}
