@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 
 const menu = [
-    { name: "Home", path: "/klib-frontend" },
+    { name: "Home", path: "/" },
     { name: "Page1", path: "/" },
     { name: "Page2", path: "/" },
     { name: "Page3", path: "/" },
@@ -28,7 +28,7 @@ const NavigationBar = (
                     <Grid item>
                         <Grid container spacing={3} alignItems="center">
                             <Grid item>
-                                <Typography display="block" color="primary" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
+                                <Typography component={Link} to="/" display="block" color="primary" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
                                     DeepEm Klib
                                 </Typography>
                             </Grid>
