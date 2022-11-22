@@ -1,8 +1,11 @@
 // @ts-ignore
 import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
-import { useTheme, Grid } from "@mui/material"
+import { useTheme, Grid, Box, Button, List, ListItem, Select, MenuItem, FormHelperText, FormControl, InputLabel, Chip } from "@mui/material"
 import { useMemo, useState } from "react"
-import GraphToggles from "./GraphToggles"
+import { useNavigate, useParams } from "react-router-dom";
+import GraphToggles from "./GraphToggles";
+import { ElementInfo } from "../PeriodicTable/ElementInfo";
+
 
 const lineColors = [
     "#FF8888",
@@ -44,6 +47,25 @@ const Graph = (
     dataLabels: string[]
 }}
 */ props) => {
+
+    const params = useParams()
+    
+    const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
+    // @ts-ignore
+    const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
+    const [selected, setSelected] = useState(["HideInfo"]);
+    const [isShow, setIsShow] = useState(false);
+    const selectionChangeHandler = (event) => {
+        setSelected(event.target.value);
+        if (event.target.value === "ShowInfo"){
+            setIsShow(true);
+        }
+        else{
+            setIsShow(false);
+        }
+        
+    };
+
     const { dataSets, dataLabels } = props
     const allDomains = useMemo(() => getDomain(dataSets), [dataSets])
     const theme = useTheme()
@@ -83,7 +105,6 @@ const Graph = (
         })
         return count
     }
-
     return (
         <Grid container>
             <Grid item xs={2}>
@@ -101,8 +122,17 @@ const Graph = (
                         setLines(newLines)
                     }}
                 />
+                <FormControl style={{ marginTop: 10, marginLeft: 0 }}>
+                    <Select        
+                        value={selected}
+                        onChange={selectionChangeHandler}        
+                    >
+                        <MenuItem value={'HideInfo'}>HideInfo</MenuItem>
+                        <MenuItem value={'ShowInfo'}>ShowInfo</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
-            <Grid item xs={10} sx={{ border: "1px solid", borderRadius: "20px" }}>
+            <Grid item xs={8} sx={{ border: "1px solid", borderRadius: "20px" }}>
                 <VictoryChart
                     height={500 + getY()*100}
                     width={1280}
@@ -175,6 +205,7 @@ const Graph = (
                     <VictoryAxis
                         crossAxis={false}
                         offsetY={50}
+                        
                         style={{
                             axis: { stroke: "gray" },
                             tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
@@ -185,7 +216,7 @@ const Graph = (
                         crossAxis={false}
                         offsetX={50}
                         tickValues={[null]}
-                        label="FJJBJSJFJDJS"
+                        label="Intensity (a.u.)"
                         style={{
                             axis: { stroke: "gray" },
                             tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
@@ -209,7 +240,34 @@ const Graph = (
                         borderPadding={10}
                     />
                 </VictoryChart>
-            </Grid>
+                
+        </Grid>
+        {isShow ? 
+        <Grid item xs={2}>
+            <List sx={{ml:"1rem"}}>
+                <ListItem disablePadding>Atomic Number: {atomicNumber}</ListItem>
+                <ListItem disablePadding>Atomic Mass: {atomicMass}</ListItem>
+                <ListItem disablePadding>Name: {elementName}</ListItem>
+                <ListItem disablePadding>Symbol: {elementSymbol}</ListItem>
+                <ListItem disablePadding>Type: {elementType}</ListItem>
+            </List>
+        </Grid> : null
+        }
+        {isShow ?
+        <Grid item xs={12}>
+            <Box>
+                <List>
+                    <ListItem>equipment 1</ListItem>
+                    <ListItem>equipment 2</ListItem>
+                    <ListItem>equipment 3</ListItem>
+                </List>
+            </Box>
+            <Box>
+                about section: source data...
+            </Box>
+        </Grid> : null
+        }
+        
         </Grid>
     )
 }

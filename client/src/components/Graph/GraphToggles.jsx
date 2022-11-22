@@ -16,8 +16,8 @@ const GraphToggles = (
 
     return (
         <List sx={{
-            height: "80vh",
-            overflowY: "auto",
+            height: "25vh",
+            overflowY: "scroll",
             overflowX: "hidden",
         }} >
             {

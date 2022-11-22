@@ -11,6 +11,7 @@ import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
 function ElementPage() {
     const navigate = useNavigate();
     const params = useParams()
+    
     const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
     // @ts-ignore
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
@@ -35,30 +36,10 @@ function ElementPage() {
                 <Button style={{ height: 20 }} onClick={() => navigate("/", { replace: true })}>back</Button>
             </Box>
             <Grid container rowSpacing={2} mt={2}>
-                <Grid item xs={10}>
+                <Grid item xs={12}>
                     {success && <Graph dataSets={data} dataLabels={dataLabels} />}
                 </Grid>
-                <Grid item xs={2}>
-                    <List sx={{ml:"1rem"}}>
-                        <ListItem disablePadding>Atomic Number: {atomicNumber}</ListItem>
-                        <ListItem disablePadding>Atomic Mass: {atomicMass}</ListItem>
-                        <ListItem disablePadding>Name: {elementName}</ListItem>
-                        <ListItem disablePadding>Symbol: {elementSymbol}</ListItem>
-                        <ListItem disablePadding>Type: {elementType}</ListItem>
-                    </List>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box>
-                        <List>
-                            <ListItem>equipment 1</ListItem>
-                            <ListItem>equipment 2</ListItem>
-                            <ListItem>equipment 3</ListItem>
-                        </List>
-                    </Box>
-                    <Box>
-                        about section: source data...
-                    </Box>
-                </Grid>
+                
             </Grid>
         </PageParent>
     )
