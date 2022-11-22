@@ -1,6 +1,6 @@
 // @ts-ignore
 import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
-import { useTheme, Grid } from "@mui/material"
+import { useTheme, Grid, Switch } from "@mui/material"
 import { useMemo, useState } from "react"
 import GraphToggles from "./GraphToggles"
 
@@ -54,6 +54,7 @@ const Graph = (
     let [domain, setDomain] = useState([-20, 50])
     let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
     let [animating, setAnimating] = useState(lines)
+    const [isExpand, setIsExpand] = useState(false);
 
     const getData = (/**@type{{x: number, y: number}[]}*/ data) => {
         const startIndex = data.findIndex((d) => d.x >= domain[0]);
@@ -101,6 +102,9 @@ const Graph = (
                         setLines(newLines)
                     }}
                 />
+                <Switch 
+                    onChange={() => setIsExpand(!isExpand)}
+                /> Expand
             </Grid>
             <Grid item xs={10} sx={{ border: "1px solid", borderRadius: "20px" }}>
                 <VictoryChart
@@ -108,7 +112,7 @@ const Graph = (
                     width={1280}
                     // @ts-ignore
                     domain={{x: [-5, 40], y: [0, 0.65+getY()*0.4]}}
-
+                    animate={{ easing: "backIn", duration: 500 }}
                     containerComponent={
                         <VictoryZoomContainer
                             minimumZoom={{ x: 0.1 }}
@@ -129,9 +133,14 @@ const Graph = (
                     {[
                         dataSets.map((d, i) => (
                             lines[i] && <VictoryLine
-                                animate={animating[i] ? {
+                                animate={animating[i] || isExpand ? {
                                     duration: 0,
-                                    onLoad: { duration: 1000 },
+                                    // onLoad:{
+                                    //     duration: 0,
+                                    //     before: ()=>({_y: 0}),
+                                    //     after: ()=>({_y: 0})
+                                    // },
+
                                     //Set to false to prevent replaying animation while zooming
                                     onEnd: () => {
                                         let newAnimating = [...animating]
@@ -145,7 +154,12 @@ const Graph = (
                                 }}
                                 data={getData(d)}
                                 interpolation="catmullRom"
-                                y={(data) => data.y + 0.4 * i}
+                                y={(data) => {
+                                    if (isExpand)
+                                        return data.y + 0.4 * i;
+                                    else
+                                        return data.y;
+                                }}
                             />
                         )),
                         // dataSets.map((d, i) => (
