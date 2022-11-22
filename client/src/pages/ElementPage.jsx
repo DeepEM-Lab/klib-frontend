@@ -5,23 +5,7 @@ import PageParent from "../structures/PageParent";
 import useSourceData from "../hooks/useSourceData";
 import Graph from "../components/Graph/Graph";
 import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
-import JSZip from  'jszip';
-import axios from "axios"
-//import $ from 'jquery';
-import { saveAs } from 'file-saver';
 
-const generateZip = async () => {
-    var zip = new JSZip();
-    let fileName = "BaMnO3.csv";
-    let res = await axios.get(`${process.env.PUBLIC_URL}/data/${fileName}`)
-    zip.file("data.csv", res.data);
-    
-    //var img = zip.folder("images");
-    
-    zip.generateAsync({type:"blob"}).then(function(content) {
-        saveAs(content, "example.zip");
-    });
-    }
 
 
 function ElementPage() {
@@ -55,9 +39,6 @@ function ElementPage() {
             <Grid container rowSpacing={2} mt={2}>
                 <Grid item xs={10}>
                     {success && <Graph dataSets={data} dataLabels={dataLabels} />}
-                </Grid>
-                <Grid item xs={10}>
-                <Button id="data_uri" onClick={generateZip}>click to download</Button>
                 </Grid>
                 <Grid item xs={2}>
                     <List sx={{ml:"1rem"}}>

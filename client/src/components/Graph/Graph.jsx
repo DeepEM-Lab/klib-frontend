@@ -1,6 +1,6 @@
 // @ts-ignore
 import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
-import { useTheme, Grid } from "@mui/material"
+import { useTheme, Grid, Button } from "@mui/material"
 import { useMemo, useState } from "react"
 import GraphToggles from "./GraphToggles"
 
