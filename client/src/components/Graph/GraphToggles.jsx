@@ -1,7 +1,4 @@
-import { Checkbox, FormControlLabel, List, ListItem, ListItemText, Switch } from "@mui/material"
-
-
-
+import { List, ListItem, ListItemText, Switch } from "@mui/material"
 
 const GraphToggles = (
 /**
@@ -12,6 +9,7 @@ const GraphToggles = (
     showLine: (index: number, show: boolean) => void
 }}
 */ props) => {
+
     let { labels, lines, loading, showLine } = props
 
     return (
@@ -19,26 +17,22 @@ const GraphToggles = (
             height: "80vh",
             overflowY: "auto",
             overflowX: "hidden",
-        }} >
-            {
-                labels.map((label, i) => (
-                    <ListItem
-                        key={i}
-                        disablePadding
-                        secondaryAction={
-                            <Switch
-                                disabled={loading}
-                                checked={lines[i] === true}
-                                onChange={(e) => showLine(i, e.target.checked)}
-                            />
-                        }
-                    >
-                        <ListItemText primary={label} />
-                    </ListItem>
-
-                ))
-            }
-
+        }}>
+            {labels.map((label, i) => (
+                <ListItem
+                    key={i}
+                    disablePadding
+                    secondaryAction={
+                        <Switch
+                            disabled={loading}
+                            checked={lines[i] === true}
+                            onChange={(e) => { showLine(i, e.target.checked) }}
+                        />
+                    }
+                >
+                    <ListItemText primary={label} />
+                </ListItem>
+            ))}
         </List>
     )
 }

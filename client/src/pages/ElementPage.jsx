@@ -6,8 +6,6 @@ import useSourceData from "../hooks/useSourceData";
 import Graph from "../components/Graph/Graph";
 import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
 
-
-
 function ElementPage() {
     const navigate = useNavigate();
     const params = useParams()
@@ -28,6 +26,8 @@ function ElementPage() {
     let success = queryObjs.every(e => e.isSuccess)
 
     let data = queryObjs.map(e => e.data ?? [])
+
+    
 
     return (
         <PageParent>
