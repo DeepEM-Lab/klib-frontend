@@ -1,8 +1,9 @@
 // @ts-ignore
 import { VictoryChart, VictoryTooltip, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend } from "victory"
-import { useTheme, Grid } from "@mui/material"
+import { useTheme, Grid, Button } from "@mui/material"
 import { useMemo, useState } from "react"
 import GraphToggles from "./GraphToggles"
+import generateZip from "../../utils/generateZip"
 
 const lineColors = [
     "#FF8888",
@@ -63,7 +64,6 @@ const Graph = (
             const k = Math.pow(2, Math.ceil(Math.log2(filtered.length / maxPoints)));
             filtered = filtered.filter((d, i) => ((i % k) === 0));
         }
-
         //add first and last data point
         if (filtered[0].x !== data[0].x) {
             filtered.push(data[0])
@@ -71,8 +71,13 @@ const Graph = (
         if (filtered[filtered.length - 1].x !== data[data.length - 1].x) {
             filtered.push(data[data.length - 1])
         }
-
         return filtered
+    }
+
+    const download = () => {
+        let fileNames = dataLabels.filter((_,i)=>lines[i] === true)
+        fileNames = fileNames.map((name)=>(`${name}.csv`))
+        generateZip(fileNames)
     }
 
     return (
@@ -92,6 +97,7 @@ const Graph = (
                         setLines(newLines)
                     }}
                 />
+                <Button variant="contained" onClick={() => download()}>Download Data</Button>
             </Grid>
             <Grid item xs={10} sx={{ border: "1px solid", borderRadius: "20px" }}>
                 <VictoryChart

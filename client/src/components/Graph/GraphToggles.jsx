@@ -1,10 +1,4 @@
-import { Checkbox, FormControlLabel, List, ListItem, ListItemText, Switch, Grid, Button } from "@mui/material"
-import generateZip from "../../hooks/generateZip";
-import { useState } from "react"
-
-let labels = ["BaMnO3", "CaMnO3", "Cubic-SrMnO3", "Hex-SMO", "Hex-YMnO3", "LaMnO3"]
-
-let initialLabelState = [true,true,true,false,false,false]
+import { List, ListItem, ListItemText, Switch } from "@mui/material"
 
 const GraphToggles = (
 /**
@@ -15,45 +9,31 @@ const GraphToggles = (
     showLine: (index: number, show: boolean) => void
 }}
 */ props) => {
+
     let { labels, lines, loading, showLine } = props
 
-    const [labelStates, setLabelStates] = useState(initialLabelState)
-
-    function handleChangeLabelState(/**@type number*/index, /**@type{boolean}*/y) {
-            const nextLabelStates = labelStates.map((c, i) => {
-                if (i === index) {
-                return y;
-                } else {
-                return c;
-                }
-            });
-            setLabelStates(nextLabelStates)
-    }
-
     return (
-        <><Grid>
-            <Button onClick={(e) => generateZip(labelStates)}>click to download</Button>
-        </Grid>
         <List sx={{
             height: "80vh",
             overflowY: "auto",
             overflowX: "hidden",
         }}>
-                {labels.map((label, i) => (
-                    <ListItem
-                        key={i}
-                        disablePadding
-                        secondaryAction={<Switch
+            {labels.map((label, i) => (
+                <ListItem
+                    key={i}
+                    disablePadding
+                    secondaryAction={
+                        <Switch
                             disabled={loading}
                             checked={lines[i] === true}
-                            onChange={(e) => {showLine(i, e.target.checked); handleChangeLabelState(i, e.target.checked) }} />}
-                    >
-                        <ListItemText primary={label} />
-                    </ListItem>
-
-                ))}
-
-            </List></>
+                            onChange={(e) => { showLine(i, e.target.checked) }}
+                        />
+                    }
+                >
+                    <ListItemText primary={label} />
+                </ListItem>
+            ))}
+        </List>
     )
 }
 
