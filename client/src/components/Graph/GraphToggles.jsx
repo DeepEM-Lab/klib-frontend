@@ -1,15 +1,10 @@
 import { Checkbox, FormControlLabel, List, ListItem, ListItemText, Switch, Grid, Button } from "@mui/material"
 import generateZip from "../../hooks/generateZip";
+import { useState } from "react"
 
 let labels = ["BaMnO3", "CaMnO3", "Cubic-SrMnO3", "Hex-SMO", "Hex-YMnO3", "LaMnO3"]
-let labelState = new Map();
-for (let j = 0; j < labels.length; j++) {
-    if (j < 3) {
-        labelState.set(j, true);
-    } else {
-        labelState.set(j, false);
-    }
-}
+
+let initialLabelState = [true,true,true,false,false,false]
 
 const GraphToggles = (
 /**
@@ -22,21 +17,28 @@ const GraphToggles = (
 */ props) => {
     let { labels, lines, loading, showLine } = props
 
+    const [labelStates, setLabelStates] = useState(initialLabelState)
 
-    const changeLabelState = (/**@type{number}*/ x, /**@type{boolean}*/y) => {
-        labelState.set(x, y)
+    function handleChangeLabelState(/**@type number*/index, /**@type{boolean}*/y) {
+            const nextLabelStates = labelStates.map((c, i) => {
+                if (i === index) {
+                return y;
+                } else {
+                return c;
+                }
+            });
+            setLabelStates(nextLabelStates)
     }
 
     return (
-        <>
-            <Grid>
-                <Button onClick={(e) => generateZip(labelState)}>click to download</Button>
-            </Grid>
-            <List sx={{
-                height: "80vh",
-                overflowY: "auto",
-                overflowX: "hidden",
-            }}>
+        <><Grid>
+            <Button onClick={(e) => generateZip(labelStates)}>click to download</Button>
+        </Grid>
+        <List sx={{
+            height: "80vh",
+            overflowY: "auto",
+            overflowX: "hidden",
+        }}>
                 {labels.map((label, i) => (
                     <ListItem
                         key={i}
@@ -44,15 +46,14 @@ const GraphToggles = (
                         secondaryAction={<Switch
                             disabled={loading}
                             checked={lines[i] === true}
-                            onChange={(e) => { showLine(i, e.target.checked); changeLabelState(i, e.target.checked) }} />}
+                            onChange={(e) => {showLine(i, e.target.checked); handleChangeLabelState(i, e.target.checked) }} />}
                     >
                         <ListItemText primary={label} />
                     </ListItem>
 
                 ))}
 
-            </List>
-        </>
+            </List></>
     )
 }
 
