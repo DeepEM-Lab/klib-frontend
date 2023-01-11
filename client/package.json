@@ -4,6 +4,7 @@
     "homepage": "https://deepem-lab.github.io/klib-frontend",
     "private": true,
     "dependencies": {
+        "@ant-design/plots": "^1.2.3",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
         "@mui/icons-material": "^5.10.9",

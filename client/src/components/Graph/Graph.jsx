@@ -2,6 +2,7 @@
 import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
 import { useTheme, Grid, Box, Button, List, ListItem, Select, MenuItem, FormHelperText, FormControl, InputLabel, Chip } from "@mui/material"
 import { useMemo, useState } from "react"
+import { Line } from '@ant-design/plots';
 import { useNavigate, useParams } from "react-router-dom";
 import GraphToggles from "./GraphToggles";
 import { ElementInfo } from "../PeriodicTable/ElementInfo";
@@ -37,7 +38,7 @@ const getDomain = (/** @type{{x: number, y: number}[][]}*/ dataSets) => {
         })
     })
 
-    return { x: [minX, maxX], y: [minY - 0.5, maxY + 0.5 * dataSets.length +5] }
+    return { x: [minX, maxX], y: [minY - 0.5, maxY + 0.5 * dataSets.length + 5] }
 }
 
 const Graph = (
@@ -49,7 +50,7 @@ const Graph = (
 */ props) => {
 
     const params = useParams()
-    
+
     const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
     // @ts-ignore
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
@@ -57,50 +58,34 @@ const Graph = (
     const [isShow, setIsShow] = useState(false);
     const selectionChangeHandler = (event) => {
         setSelected(event.target.value);
-        if (event.target.value === "ShowInfo"){
+        if (event.target.value === "ShowInfo") {
             setIsShow(true);
         }
-        else{
+        else {
             setIsShow(false);
         }
-        
+
     };
 
     const { dataSets, dataLabels } = props
-    const allDomains = useMemo(() => getDomain(dataSets), [dataSets])
     const theme = useTheme()
-    //set maximum rendering points
-    const maxPoints = Math.ceil(2000 / dataSets.length)
     const darkMode = theme.palette.mode === "dark"
 
+    const data = [...dataSets[0],...dataSets[1],...dataSets[2],...dataSets[3],...dataSets[4],...dataSets[5]].sort((a, b)=>a["x"]-b["x"])
+
+    console.log(data)
     let [domain, setDomain] = useState([-20, 50])
     let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
     let [animating, setAnimating] = useState(lines)
 
-    const getData = (/**@type{{x: number, y: number}[]}*/ data) => {
-        const startIndex = data.findIndex((d) => d.x >= domain[0]);
-        const endIndex = data.findIndex((d) => d.x > domain[1]);
-        
-        let filtered = data.slice(startIndex > 0 ? startIndex - 1 : 0, endIndex !== -1 ? endIndex + 1 : data.length);
-        if (filtered.length > maxPoints) {
-            const k = Math.pow(2, Math.ceil(Math.log2(filtered.length / maxPoints)));
-            filtered = filtered.filter((d, i) => ((i % k) === 0));
-        }
+    function isWheelDown(event) {
+        event.gEvent.preventDefault();
+        return event.gEvent.originalEvent.deltaY > 0;
+      }
 
-        //add first and last data point
-        if (filtered[0].x !== data[0].x) {
-            filtered.push(data[0])
-        }
-        if (filtered[filtered.length - 1].x !== data[data.length - 1].x) {
-            filtered.push(data[data.length - 1])
-        }
-
-        return filtered
-    }
-
-    const getY = () =>{
+    const getY = () => {
         let count = 0
-        lines.forEach((d)=>{
+        lines.forEach((d) => {
             count += d ? 1 : 0
         })
         return count
@@ -123,9 +108,9 @@ const Graph = (
                     }}
                 />
                 <FormControl style={{ marginTop: 10, marginLeft: 0 }}>
-                    <Select        
+                    <Select
                         value={selected}
-                        onChange={selectionChangeHandler}        
+                        onChange={selectionChangeHandler}
                     >
                         <MenuItem value={'HideInfo'}>HideInfo</MenuItem>
                         <MenuItem value={'ShowInfo'}>ShowInfo</MenuItem>
@@ -133,141 +118,77 @@ const Graph = (
                 </FormControl>
             </Grid>
             <Grid item xs={8} sx={{ border: "1px solid", borderRadius: "20px" }}>
-                <VictoryChart
-                    height={500 + getY()*100}
-                    width={1280}
-                    // @ts-ignore
-                    domain={{x: [-5, 40], y: [0, 0.65+getY()*0.4]}}
-
-                    containerComponent={
-                        <VictoryZoomContainer
-                            minimumZoom={{ x: 0.1 }}
-                            allowZoom={true}
-                            // @ts-ignore
-                            onZoomDomainChange={(domain) => setDomain(domain.x)}
-                            events={{
-                                //Prevent zoom when animating
-                                onWheelCapture: (e) => { 
-                                    if (lines.some((v, i) => lines[i] === true ? animating[i] : false)){
-                                        e.stopPropagation() 
-                                    }
-                                }
-                            }}
-                        />
-                    }
-                >
-                    {[
-                        dataSets.map((d, i) => (
-                            lines[i] && <VictoryLine
-                                animate={animating[i] ? {
-                                    duration: 0,
-                                    onLoad: { duration: 1000 },
-                                    //Set to false to prevent replaying animation while zooming
-                                    onEnd: () => {
-                                        let newAnimating = [...animating]
-                                        newAnimating[i] = false
-                                        setAnimating(newAnimating)
-                                    }
-                                } : false}
-                                key={i}
-                                style={{
-                                    data: { stroke: lineColors[i], strokeWidth: 2.3333}
-                                }}
-                                data={getData(d)}
-                                interpolation="catmullRom"
-                                y={(data) => data.y + 0.4 * i}
-                            />
-                        )),
-                        // dataSets.map((d, i) => (
-                        //     lines[i] && <VictoryScatter
-                        //         size={6}
-                        //         key={i}
-                        //         data={getData(d)}
-                        //         labels={({ datum }) => `${datum.x.toFixed(3)}, ${datum.y.toFixed(3)}`}
-                        //         labelComponent={<VictoryTooltip
-                        //             dy={-16}
-                        //             flyoutStyle={{
-                        //                 fill: "white",
-                        //                 fillOpacity: "0.9",
-                        //                 stroke: theme.palette.secondary.main
-                        //             }}
-                        //             flyoutWidth={120}
-                        //             style={[{ fill: "black", fontSize: 16, fontFamily: theme.typography.fontFamily }]}
-                        //         />}
-                        //         y={(data) => data.y + 0.5 * i}
-                        //         style={{
-                        //             data: { fill: lineColors[i] }
-                        //         }}
-                        //     />
-                        // ))
-                    ]}
-
-                    <VictoryAxis
-                        crossAxis={false}
-                        offsetY={50}
-                        
-                        style={{
-                            axis: { stroke: "gray" },
-                            tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
-                        }}
-                    />
-                    <VictoryAxis
-                        dependentAxis
-                        crossAxis={false}
-                        offsetX={50}
-                        tickValues={[null]}
-                        label="Intensity (a.u.)"
-                        style={{
-                            axis: { stroke: "gray" },
-                            tickLabels: { fontSize: 18, fill: darkMode ? "white" : "black" }
-                        }}
-                    />
-                    <VictoryLegend x={1000} y={0}
-                        orientation="horizontal"
-                        itemsPerRow={2}
-                        title={"Elements"}
-                        centerTitle
-                        style={{
-                            border: { stroke: darkMode ? "white" : "black" },
-                            title: { fontSize: 18, fill: darkMode ? "white" : "black" },
-                            data: { fill: "blue" },
-                            labels: { fill: darkMode ? "white" : "navy", fontSize: 16 },
-                        }}
-                        data={dataLabels.map((title, i) => ({
-                            name: title,
-                            symbol: { fill: lineColors[i] }
-                        })).filter((d,i)=>lines[i])}
-                        borderPadding={10}
-                    />
-                </VictoryChart>
+                <Line interactions={[{type: "view-zoom",  cfg: {
+  start: [
+    {
+      trigger: 'plot:mousewheel',
+      isEnable(context) {
+        return isWheelDown(context.event);
+      },
+      action: 'scale-zoom:zoomOut',
+      throttle: { wait: 100, leading: true, trailing: false },
+    },
+    {
+      trigger: 'plot:mousewheel',
+      isEnable(context) {
+        return !isWheelDown(context.event);
+      },
+      action: 'scale-zoom:zoomIn',
+      throttle: { wait: 100, leading: true, trailing: false },
+    },
+  ],
+}}, 
                 
-        </Grid>
-        {isShow ? 
-        <Grid item xs={2}>
-            <List sx={{ml:"1rem"}}>
-                <ListItem disablePadding>Atomic Number: {atomicNumber}</ListItem>
-                <ListItem disablePadding>Atomic Mass: {atomicMass}</ListItem>
-                <ListItem disablePadding>Name: {elementName}</ListItem>
-                <ListItem disablePadding>Symbol: {elementSymbol}</ListItem>
-                <ListItem disablePadding>Type: {elementType}</ListItem>
-            </List>
-        </Grid> : null
-        }
-        {isShow ?
-        <Grid item xs={12}>
-            <Box>
-                <List>
-                    <ListItem>equipment 1</ListItem>
-                    <ListItem>equipment 2</ListItem>
-                    <ListItem>equipment 3</ListItem>
-                </List>
-            </Box>
-            <Box>
-                about section: source data...
-            </Box>
-        </Grid> : null
-        }
-        
+                
+                
+                
+                
+                
+                
+                {type: "tooltip", cfg: {start: [{ trigger: 'plot:mousedown', action: 'scale-translate:start' }],
+  end: [{ trigger: 'plot:mouseup', action: 'scale-translate:end' }],
+
+processing: [{trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 10, leading: true, trailing: false }}]
+
+}}]} data={data} xField="x" yField="y" seriesField="name"
+                smooth={false}
+                 xAxis={{type:"linear",  tickInterval: 2, label:{formatter: (text)=>parseInt(text).toString()}}}
+                tooltip={{
+                    formatter: (datum) => {
+                        return { name: datum.name, value: `${parseFloat(datum.x).toFixed(4)}, ${parseFloat(datum.y).toFixed(4)}` };
+                    },
+                    showTitle: false
+                }}
+                
+                />
+
+            </Grid>
+            {isShow ?
+                <Grid item xs={2}>
+                    <List sx={{ ml: "1rem" }}>
+                        <ListItem disablePadding>Atomic Number: {atomicNumber}</ListItem>
+                        <ListItem disablePadding>Atomic Mass: {atomicMass}</ListItem>
+                        <ListItem disablePadding>Name: {elementName}</ListItem>
+                        <ListItem disablePadding>Symbol: {elementSymbol}</ListItem>
+                        <ListItem disablePadding>Type: {elementType}</ListItem>
+                    </List>
+                </Grid> : null
+            }
+            {isShow ?
+                <Grid item xs={12}>
+                    <Box>
+                        <List>
+                            <ListItem>equipment 1</ListItem>
+                            <ListItem>equipment 2</ListItem>
+                            <ListItem>equipment 3</ListItem>
+                        </List>
+                    </Box>
+                    <Box>
+                        about section: source data...
+                    </Box>
+                </Grid> : null
+            }
+
         </Grid>
     )
 }
