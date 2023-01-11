@@ -81,7 +81,7 @@ const Graph = (
     function isWheelDown(event) {
         event.gEvent.preventDefault();
         return event.gEvent.originalEvent.deltaY > 0;
-      }
+    }
 
     const getY = () => {
         let count = 0
@@ -119,40 +119,37 @@ const Graph = (
             </Grid>
             <Grid item xs={8} sx={{ border: "1px solid", borderRadius: "20px" }}>
                 <Line interactions={[{type: "view-zoom",  cfg: {
-  start: [
-    {
-      trigger: 'plot:mousewheel',
-      isEnable(context) {
-        return isWheelDown(context.event);
-      },
-      action: 'scale-zoom:zoomOut',
-      throttle: { wait: 100, leading: true, trailing: false },
-    },
-    {
-      trigger: 'plot:mousewheel',
-      isEnable(context) {
-        return !isWheelDown(context.event);
-      },
-      action: 'scale-zoom:zoomIn',
-      throttle: { wait: 100, leading: true, trailing: false },
-    },
-  ],
-}}, 
+                    start: [
+                        {
+                            trigger: 'plot:mousewheel',
+                            isEnable(context) {
+                                return isWheelDown(context.event);
+                            },
+                            action: 'scale-zoom:zoomOut',
+                            throttle: { wait: 100, leading: true, trailing: false },
+                        },
+                        {
+                            trigger: 'plot:mousewheel',
+                            isEnable(context) {
+                                return !isWheelDown(context.event);
+                            },
+                            action: 'scale-zoom:zoomIn',
+                            throttle: { wait: 100, leading: true, trailing: false },
+                        },
+                    ],
+                }}, 
                 
-                
-                
-                
-                
-                
-                
-                {type: "tooltip", cfg: {start: [{ trigger: 'plot:mousedown', action: 'scale-translate:start' }],
-  end: [{ trigger: 'plot:mouseup', action: 'scale-translate:end' }],
-
-processing: [{trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 10, leading: true, trailing: false }}]
-
-}}]} data={data} xField="x" yField="y" seriesField="name"
+                {type: "tooltip", cfg: {
+                    start: [{ trigger: 'plot:mousedown', action: 'scale-translate:start' }],
+                    end: [{ trigger: 'plot:mouseup', action: 'scale-translate:end' }],
+                    processing: [{trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 10, leading: true, trailing: false }}]
+                }}]}
+                data={data} 
+                xField="x"
+                yField="y" 
+                seriesField="name"
                 smooth={false}
-                 xAxis={{type:"linear",  tickInterval: 2, label:{formatter: (text)=>parseInt(text).toString()}}}
+                xAxis={{type:"linear",  tickInterval: 2, label:{formatter: (text)=>parseInt(text).toString()}}}
                 tooltip={{
                     formatter: (datum) => {
                         return { name: datum.name, value: `${parseFloat(datum.x).toFixed(4)}, ${parseFloat(datum.y).toFixed(4)}` };
