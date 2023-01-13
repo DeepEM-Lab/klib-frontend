@@ -1,11 +1,12 @@
 // @ts-ignore
 import { VictoryChart, VictoryTooltip, createContainer, VictoryLine, VictoryScatter, VictoryZoomContainer, VictoryAxis, VictoryLegend, VictoryTheme } from "victory"
-import { useTheme, Grid, Box, Button, List, ListItem, Select, MenuItem, FormHelperText, FormControl, InputLabel, Chip } from "@mui/material"
+import { useTheme, Grid, Box, Button, List, ListItem, Select, MenuItem, FormHelperText, FormControl, InputLabel, Chip, Switch } from "@mui/material"
 import { useMemo, useState } from "react"
 import { Line } from '@ant-design/plots';
 import { useNavigate, useParams } from "react-router-dom";
 import GraphToggles from "./GraphToggles";
 import { ElementInfo } from "../PeriodicTable/ElementInfo";
+import { Dataset } from "@mui/icons-material";
 
 
 const lineColors = [
@@ -56,6 +57,7 @@ const Graph = (
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
     const [selected, setSelected] = useState(["HideInfo"]);
     const [isShow, setIsShow] = useState(false);
+    const [isExploded, setIsExploded] = useState(false);
     const selectionChangeHandler = (event) => {
         setSelected(event.target.value);
         if (event.target.value === "ShowInfo") {
@@ -64,25 +66,14 @@ const Graph = (
         else {
             setIsShow(false);
         }
-
+    
     };
-
+    
+    
     const { dataSets, dataLabels } = props
     const theme = useTheme()
     const darkMode = theme.palette.mode === "dark"
-
-    const data = [...dataSets[0],...dataSets[1],...dataSets[2],...dataSets[3],...dataSets[4],...dataSets[5]].sort((a, b)=>a["x"]-b["x"])
-
-    console.log(data)
-    let [domain, setDomain] = useState([-20, 50])
-    let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
-    let [animating, setAnimating] = useState(lines)
-
-    function isWheelDown(event) {
-        event.gEvent.preventDefault();
-        return event.gEvent.originalEvent.deltaY > 0;
-    }
-
+    
     const getY = () => {
         let count = 0
         lines.forEach((d) => {
@@ -90,13 +81,59 @@ const Graph = (
         })
         return count
     }
+    
+    
+    // ...dataSets[1],...dataSets[2],...dataSets[3],...dataSets[4],...dataSets[5]
+    
+    
+    let [domain, setDomain] = useState([-20, 50])
+    let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
+    let [animating, setAnimating] = useState(lines)
+    // let displayedData = 
+
+    // separate data
+    const [data, setData] = useState( [...dataSets[0],...dataSets[1],...dataSets[2],...dataSets[3],...dataSets[4],...dataSets[5]].sort((a, b)=>a["x"]-b["x"] ));
+
+    
+    function isWheelDown(event) {
+        event.gEvent.preventDefault();
+        return event.gEvent.originalEvent.deltaY > 0;
+    }
+    
+    const handleExplosion = () => {
+        let newDataSet = Array(dataSets.length).fill(0);
+    
+        let count = 6;
+        for (var i = 0; i < dataSets.length; ++i) {
+            let line = Array(dataSets[i].length).fill(0);
+            for (var j = 0; j < dataSets[i].length; ++j) {
+                line[j] = dataSets[i][j];
+                // shift lines up if it is in exploded view
+                if (!isExploded)
+                    line[j].y += count * 0.4;
+            }
+            newDataSet[i] = line;
+            count -= 1;
+        }
+        
+        const newData = [...newDataSet[0],...newDataSet[1],...newDataSet[2],...newDataSet[3],...newDataSet[4],...newDataSet[5]].sort((a, b)=>a["x"]-b["x"]);
+
+        setData(newData);
+        setIsExploded(!isExploded);
+
+        // console.log(data);
+    };
+
+    console.log(dataSets);
+
     return (
         <Grid container>
             <Grid item xs={2}>
                 <GraphToggles
                     labels={dataLabels}
                     lines={lines}
-                    loading={animating.some((v) => v)}
+                    // loading={animating.some((v) => v)}
+                    loading={false}
                     //only show toggled lines.
                     showLine={(i, s) => {
                         let newAnimating = [...animating]
@@ -107,6 +144,13 @@ const Graph = (
                         setLines(newLines)
                     }}
                 />
+
+                Explosion
+                <Switch 
+                    disabled={false}
+                    onChange={ () => handleExplosion() }
+                />
+
                 <FormControl style={{ marginTop: 10, marginLeft: 0 }}>
                     <Select
                         value={selected}
@@ -117,7 +161,7 @@ const Graph = (
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={8} sx={{ border: "1px solid", borderRadius: "20px" }}>
+            <Grid item xs={8} sx={{ height: isExploded ? "700px" : "400px", border: "1px solid", borderRadius: "20px" }}>
                 <Line interactions={[{type: "view-zoom",  cfg: {
                     start: [
                         {
@@ -144,7 +188,7 @@ const Graph = (
                     end: [{ trigger: 'plot:mouseup', action: 'scale-translate:end' }],
                     processing: [{trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 10, leading: true, trailing: false }}]
                 }}]}
-                data={data} 
+                data={ data }
                 xField="x"
                 yField="y" 
                 seriesField="name"
@@ -157,6 +201,7 @@ const Graph = (
                     showTitle: false
                 }}
                 
+
                 />
 
             </Grid>
