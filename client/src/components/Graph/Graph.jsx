@@ -89,10 +89,16 @@ const Graph = (
     let [domain, setDomain] = useState([-20, 50])
     let [lines, setLines] = useState(Array(dataSets.length).fill(true, 0, Math.ceil(dataSets.length / 2)))
     let [animating, setAnimating] = useState(lines)
-    // let displayedData = 
+    // select displayed data
+    let displayedData = Array.from(dataSets, (line, i) => {
+        if (line[i])
+            return dataSets[i];
+    });
+
+    console.log(displayedData === dataSets);
 
     // separate data
-    const [data, setData] = useState( [...dataSets[0],...dataSets[1],...dataSets[2],...dataSets[3],...dataSets[4],...dataSets[5]].sort((a, b)=>a["x"]-b["x"] ));
+    const [data, setData] = useState( displayedData.flat().sort((a, b) => a["x"]-b["x"] ));
 
     
     function isWheelDown(event) {
@@ -101,9 +107,12 @@ const Graph = (
     }
     
     const handleExplosion = () => {
-        let newDataSet = Array(dataSets.length).fill(0);
+        let newDataSet = Array.from(dataSets, (line, i) => {
+            if (line[i])
+                return dataSets[i];
+        });
     
-        let count = 6;
+        let count = newDataSet.length;
         for (var i = 0; i < dataSets.length; ++i) {
             let line = Array(dataSets[i].length).fill(0);
             for (var j = 0; j < dataSets[i].length; ++j) {
@@ -116,15 +125,18 @@ const Graph = (
             count -= 1;
         }
         
-        const newData = [...newDataSet[0],...newDataSet[1],...newDataSet[2],...newDataSet[3],...newDataSet[4],...newDataSet[5]].sort((a, b)=>a["x"]-b["x"]);
+        const newData = newDataSet.flat().sort((a, b)=>a["x"]-b["x"]);
 
         setData(newData);
+
+        console.log(data);
+
         setIsExploded(!isExploded);
 
         // console.log(data);
     };
 
-    console.log(dataSets);
+
 
     return (
         <Grid container>
