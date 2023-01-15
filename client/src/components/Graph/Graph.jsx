@@ -1,5 +1,5 @@
 // @ts-ignore
-import { useTheme, Grid, Box, List, ListItem, Select, MenuItem, FormControl, Switch } from "@mui/material"
+import { Grid, Switch } from "@mui/material"
 import { useState } from "react"
 import { Line } from '@ant-design/plots';
 import { useParams } from "react-router-dom";
@@ -16,7 +16,6 @@ const isWheelDown = (/**@type any*/ event) => {
     event.gEvent.preventDefault();
     return event.gEvent.originalEvent.deltaY < 0;
 }
-
 
 //Graph Component
 const Graph = (
@@ -52,7 +51,7 @@ const Graph = (
     const tooltipCfg = {
         start: [{trigger: 'plot:mousedown',action: 'scale-translate:start'}],
         end: [{trigger: 'plot:mouseup',action: 'scale-translate:end'}],
-        processing: [{ trigger: 'plot:mousemove', action: ['scale-translate:translate']}]
+        processing: [{ trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 50, leading: true, trailing: false },}]
     }
 
     const viewzoomCfg= {
