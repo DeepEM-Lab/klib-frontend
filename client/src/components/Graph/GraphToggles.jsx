@@ -8,11 +8,10 @@ const GraphToggles = (
 @type {{
     labels: string[]
     lines: boolean[]
-    loading: boolean
     showLine: (index: number, show: boolean) => void
 }}
 */ props) => {
-    let { labels, lines, loading, showLine } = props
+    let { labels, lines, showLine } = props
 
     return (
         <List sx={{
@@ -27,7 +26,6 @@ const GraphToggles = (
                         disablePadding
                         secondaryAction={
                             <Switch
-                                disabled={loading}
                                 checked={lines[i] === true}
                                 onChange={(e) => showLine(i, e.target.checked)}
                             />
