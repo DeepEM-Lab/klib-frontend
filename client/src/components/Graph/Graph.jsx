@@ -35,7 +35,7 @@ G2.registerInteraction("zoom", zoomCfg)
 
 const unpackDataSets = (/**@type {{x: number, y: number, name: string}[][]}*/dataSets) => {
     let unpacked = [];
-    for (let dataSet of dataSets) for (let data of dataSet) unpacked.push(data)
+    for (let dataSet of dataSets) for (let data of dataSet) unpacked.push({ ...data, _y: data.y })
     return unpacked.sort((a, b) => a["x"] - b["x"])
 }
 
@@ -69,7 +69,7 @@ const Graph = (
         let arr = []
         for (let i = 0; i < dataSets.length; i++) {
             for (let data of dataSets[i]) {
-                arr.push({ ...data, y: data.y + i * 0.4 })
+                arr.push({ ...data, y: data.y + i * 0.4, _y: data.y })
             }
         }
         dataUnpacked = arr.sort((a, b) => a["x"] - b["x"])
@@ -103,10 +103,13 @@ const Graph = (
                     seriesField="name"
                     smooth={false}
                     xAxis={{ type: "linear", tickInterval: 2, label: { formatter: (text) => parseInt(text).toString() } }}
-                    interactions={[{ type: "zoom"}, { type: "drag" }]}
+                    interactions={[{ type: "zoom" }, { type: "drag" }]}
                     tooltip={{
-                        formatter: (datum) => {
-                            return { name: datum.name, value: `${parseFloat(datum.x).toFixed(4)}, ${parseFloat(datum.y).toFixed(4)}` };
+                        customItems:(dataArr)=>{
+                            dataArr = dataArr.sort((a, b)=>b.data.y - a.data.y)
+                            // @ts-ignore
+                            dataArr.forEach((d)=>{d.value = `${parseFloat(d.data.x).toFixed(4)}, ${parseFloat(d.data._y).toFixed(4)}`})
+                            return dataArr;
                         },
                         showTitle: false
                     }}
