@@ -38,15 +38,17 @@ const Graph = (
     const dataSets = AllDataSets.filter((_, i)=>linesOn[i])
 
     let dataUnpacked = unpackDataSets(dataSets)
-    if(isExpanded){//Expand datasets, shifting each line up.
-        let arr = []
-        for(let i = 0; i < dataSets.length; i++){
-            for (let data of dataSets[i]){
-                arr.push({...data, y: data.y+i*0.4})
-            }
+    // if(isExpanded){//Expand datasets, shifting each line up.
+    let arr = []
+    for(let i = 0; i < dataSets.length; i++){
+        for (let data of dataSets[i]){
+            arr.push({...data, newY: data.y+i*0.4})
         }
-        dataUnpacked = arr.sort((a, b) => a["x"] - b["x"])
     }
+    dataUnpacked = arr.sort((a, b) => a["x"] - b["x"])
+    // }
+
+    console.log(dataUnpacked);
 
     const tooltipCfg = {
         start: [{trigger: 'plot:mousedown',action: 'scale-translate:start'}],
@@ -54,7 +56,7 @@ const Graph = (
         processing: [{ trigger: 'plot:mousemove', action: ['scale-translate:translate'], throttle: { wait: 50, leading: true, trailing: false },}]
     }
 
-    const viewzoomCfg= {
+    const viewzoomCfg = {
         start: [
             {
                 trigger: 'plot:mousewheel',
@@ -91,18 +93,19 @@ const Graph = (
                 />
 
             </Grid>
-            <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px" }}>
+            <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px", padding: "20px" }}>
                 <Line
                     data={dataUnpacked}
                     xField="x"
-                    yField="y"
+                    yField={ isExpanded ? "newY" : "y" }
                     seriesField="name"
                     smooth={false}
-                    xAxis={{ type: "linear", tickInterval: 2, label: { formatter: (text) => parseInt(text).toString() } }}
+                    xAxis={{ type: "linear", tickInterval: 2, label: { formatter: (text) => parseInt(text).toString() }, grid: { line: { style: { lineWidth: 0 } } }}}
+                    yAxis={{  grid: { line: { style: { lineWidth: 0 } } }, label: { formatter: (text) => "" } }}
                     interactions={[{type: "view-zoom", cfg: viewzoomCfg}, { type: "element-active", cfg: tooltipCfg}]}
                     tooltip={{
                         formatter: (datum) => {
-                            return { name: datum.name, value: `${parseFloat(datum.x).toFixed(4)}, ${parseFloat(datum.y).toFixed(4)}` };
+                            return { name: datum.name.split(".")[0], value: `${parseFloat(datum.x).toFixed(4)}, ${parseFloat(datum.y).toFixed(4)}, ${parseFloat(datum.newY).toFixed(4)}` };
                         },
                         showTitle: false
                     }}
