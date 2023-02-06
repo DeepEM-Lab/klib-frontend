@@ -103,7 +103,7 @@ const Graph = (
                     smooth={false}
                     xAxis={{ type: "linear", tickInterval: 2, label: { formatter: (text) => parseInt(text).toString() } }}
                     yAxis={{  grid: { line: { style: { lineWidth: 0 } } }, label: { formatter: (text) => "" } }}
-                    interactions={[{type: "view-zoom", cfg: viewzoomCfg}, { type: "element-active", cfg: tooltipCfg}]}
+                    interactions={[{ type: "zoom" }, { type: "drag" }]}
                     tooltip={{
                         customItems:(dataArr)=>{
                             dataArr = dataArr.sort((a, b)=>b.data.y - a.data.y)
