@@ -1,0 +1,13 @@
+close all;
+data = readmatrix('FeS2.txt');
+i = length(Fe2_data);
+[xa,ya] = align_spec(709.12,data);
+Fe2_data(i).x = xa;
+Fe2_data(i).y = ya;
+plot(Fe2_data(i).x,ya);
+Fe2_data(i).tech = 'EELS';
+Fe2_data(i).group = 'EELS-1';
+currentdirectory = pwd;
+name = split(currentdirectory,'\');
+name = name{length(name)};
+Fe2_data(i).name = name;
