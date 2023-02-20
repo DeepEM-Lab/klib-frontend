@@ -9,12 +9,10 @@ const useSourceData = (/**@type string*/ fileName) => {
         ["fetch-source-data", fileName],
         async () => {
             let res = await axios.get(`${process.env.PUBLIC_URL}/data/${fileName}`)
-            //console.log(`${process.env.PUBLIC_URL}/data/${fileName}`)
-            return csvToJson(res.data)
+            return csvToJson(fileName, res.data)
         }
     )
 
     return queryObj
 }
-    
 export default useSourceData
