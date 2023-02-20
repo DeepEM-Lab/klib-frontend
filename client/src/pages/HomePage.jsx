@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from "@mui/material"
+import { Grid, Paper } from "@mui/material"
 import PeriodicTable from "../components/PeriodicTable/PeriodicTable"
 import PageParent from "../structures/PageParent"
 
