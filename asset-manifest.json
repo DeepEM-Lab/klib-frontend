@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/klib-frontend/static/css/main.073c9b0a.css",
-    "main.js": "/klib-frontend/static/js/main.7eebac78.js",
+    "main.js": "/klib-frontend/static/js/main.5aaeee19.js",
     "index.html": "/klib-frontend/index.html",
     "main.073c9b0a.css.map": "/klib-frontend/static/css/main.073c9b0a.css.map",
-    "main.7eebac78.js.map": "/klib-frontend/static/js/main.7eebac78.js.map"
+    "main.5aaeee19.js.map": "/klib-frontend/static/js/main.5aaeee19.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.7eebac78.js"
+    "static/js/main.5aaeee19.js"
   ]
 }
