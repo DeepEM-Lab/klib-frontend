@@ -1,10 +1,10 @@
 // @ts-ignore
-import { Grid, Switch } from "@mui/material"
-import { useState } from "react"
 import { G2, Line } from '@ant-design/plots';
+import { Grid, Switch } from "@mui/material"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import GraphToggles from "./GraphToggles";
 import { ElementInfo } from "../PeriodicTable/ElementInfo";
+import GraphToggles from "./GraphToggles";
 import ZoomByAxis from "./ZoomByAxis";
 
 const dragCfg = {
@@ -58,25 +58,28 @@ const Graph = (
     // @ts-ignore
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element]
 
+    useEffect(() => {
+        document.getElementsByTagName('canvas')[0].addEventListener('mousewheel', function (event) {
+            event.preventDefault();
+        }, false);
+    }, [])
+
     let [isExpanded, setIsExpanded] = useState(false)
     //default show all lines. If AllDataSets have length of 6, then lines will be [true, true, true, true, true, true]
     let [linesOn, setLinesOn] = useState(Array(AllDataSets.length).fill(true, 0, AllDataSets.length / 2))
 
     const dataSets = AllDataSets.filter((_, i) => linesOn[i])
+    
 
     let dataUnpacked = unpackDataSets(dataSets)
     if (isExpanded) {//Expand datasets, shifting each line up.
-        let arr = []
+        dataUnpacked = []
         for (let i = 0; i < dataSets.length; i++) {
             for (let data of dataSets[i]) {
-                arr.push({ ...data, y: data.y + i * 0.4, _y: data.y })
+                dataUnpacked.push({ ...data, y: data.y + i * 0.4, _y: data.y })
             }
         }
-        dataUnpacked = arr.sort((a, b) => a["x"] - b["x"])
     }
-    document.getElementsByTagName('canvas')[0].addEventListener('mousewheel', function (event) {
-        event.preventDefault();
-    }, false);
 
     return (
         <Grid container>
@@ -97,14 +100,19 @@ const Graph = (
                     onChange={() => setIsExpanded(!isExpanded)}//set line expansion
                 />
             </Grid>
-            <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px" }}>
+            <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px", padding: "20px" }}>
                 <Line
                     data={dataUnpacked}
                     xField="x"
                     yField="y"
                     seriesField="name"
                     smooth={false}
-                    xAxis={{ type: "linear", tickInterval: 2, label: { formatter: (text) => parseInt(text).toString() } }}
+                    xAxis={{
+                        type: "linear", tickInterval: 2,
+                        label: { formatter: (text) => parseInt(text).toString() },
+                        grid: { line: { style: { lineWidth: 0 } } }
+                    }}
+                    yAxis={{ grid: { line: { style: { lineWidth: 0 } } }, label: { formatter: (text) => "" } }}
                     interactions={[{ type: "zoom" }, { type: "drag" }]}
                     tooltip={{
                         customItems:(dataArr)=>{
@@ -112,8 +120,7 @@ const Graph = (
                             // @ts-ignore
                             dataArr.forEach((d)=>{d.value = `${parseFloat(d.data.x).toFixed(4)}, ${parseFloat(d.data._y).toFixed(4)}`})
                             return dataArr;
-                        },
-                        showTitle: false
+                        }
                     }}
                 />
             </Grid>
