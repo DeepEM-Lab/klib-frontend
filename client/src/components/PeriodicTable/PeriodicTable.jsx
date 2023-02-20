@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material"
-import { allElements, ElementTypes } from "./ElementInfo"
+import { allElements } from "./ElementInfo"
 import ElementButton from "./ElementButton"
 
 

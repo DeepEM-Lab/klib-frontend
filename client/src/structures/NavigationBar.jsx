@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Grid, Typography, IconButton, useTheme, Menu, MenuItem, Button } from "@mui/material"
+import { AppBar, Toolbar, Grid, Typography, IconButton, useTheme, Button } from "@mui/material"
 import { LightMode, NightsStay } from "@mui/icons-material"
 import { Link } from "react-router-dom"
 
@@ -28,7 +28,7 @@ const NavigationBar = (
                     <Grid item>
                         <Grid container spacing={3} alignItems="center">
                             <Grid item>
-                                <Typography display="block" color="primary" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
+                                <Typography component={Link} to="/" display="block" color="primary" variant="h5" noWrap sx={{ fontWeight: "medium" }}>
                                     DeepEm Klib
                                 </Typography>
                             </Grid>
