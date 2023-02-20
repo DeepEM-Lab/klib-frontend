@@ -63,12 +63,6 @@ const Graph = (
             event.preventDefault();
         }, false);
     }, [])
-
-    let [isExpanded, setIsExpanded] = useState(false)
-    //default show all lines. If AllDataSets have length of 6, then lines will be [true, true, true, true, true, true]
-    let [linesOn, setLinesOn] = useState(Array(AllDataSets.length).fill(true, 0, AllDataSets.length / 2))
-
-    const dataSets = AllDataSets.filter((_, i) => linesOn[i])
     
 
     let dataUnpacked = unpackDataSets(dataSets)
