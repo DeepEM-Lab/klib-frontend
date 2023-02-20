@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 
 const menu = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/klib-frontend" },
     { name: "Page1", path: "/" },
     { name: "Page2", path: "/" },
     { name: "Page3", path: "/" },
