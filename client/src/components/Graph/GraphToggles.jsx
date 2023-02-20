@@ -1,8 +1,5 @@
 import { List, ListItem, ListItemText, Switch } from "@mui/material"
 
-
-
-
 const GraphToggles = (
 /**
 @type {{

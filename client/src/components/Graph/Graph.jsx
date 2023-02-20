@@ -74,6 +74,9 @@ const Graph = (
         }
         dataUnpacked = arr.sort((a, b) => a["x"] - b["x"])
     }
+    document.getElementsByTagName('canvas')[0].addEventListener('mousewheel', function (event) {
+        event.preventDefault();
+    }, false);
 
     return (
         <Grid container>
@@ -93,7 +96,6 @@ const Graph = (
                     disabled={false}
                     onChange={() => setIsExpanded(!isExpanded)}//set line expansion
                 />
-
             </Grid>
             <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px" }}>
                 <Line
