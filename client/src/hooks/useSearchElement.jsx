@@ -4,9 +4,16 @@ import useSourceData from "./useSourceData";
 import csvToJson  from "../utils/csvToJson";
 import { DataArray } from "@mui/icons-material";
 
+
 // added hook for searching feature
 const useSearchElement = (/**@type string */ element) => {
-    const dataFolder = `${process.env.PUBLIC_URL}/search/fakefiles.txt`;
+    const dataFiles = `${process.env.PUBLIC_URL}/search/fileindexes.txt`;
+
+    const readData = async (/**@type string*/ fileName) => {
+        // create regular express
+        let res = await axios.get(`${process.env.PUBLIC_URL}/data/${fileName}`);
+        return csvToJson(fileName, res.data);
+    }
 
     // only matching element symbols for now...
     const regex = new RegExp(`^${element}`);
@@ -17,8 +24,9 @@ const useSearchElement = (/**@type string */ element) => {
         async () => {
             let /**@type string[] */ matches = [];
             // getting filenames for all existing files
-            const res = await axios.get(dataFolder);
-            const fileNames = res.data.split("\r\n");
+            const res = await axios.get(dataFiles);
+            const fileNames = res.data.split("\n");
+            
 
             // matching all files that contain certain element
             fileNames.forEach( (/**@type string */ file) => {
@@ -26,16 +34,16 @@ const useSearchElement = (/**@type string */ element) => {
                     matches.push(file);
             });
 
-            // TODO: test for sending request
-            // const data = matches.map( async (fileName) => {
-            //     let res = await axios.get(`${process.env.PUBLIC_URL}/data/${fileName}`);
-            //     return csvToJson(fileName, res.data);
-            // });
+            // TODO: test for sending request --> for Ba and Fe
 
-            // FIXME: invalid calls for hooks
-            // const data = matches.map((name) => useSourceData(name));
+            const data = await Promise.all( matches.map( async (file) => {
+                    let result = await axios.get(`${process.env.PUBLIC_URL}/data/${file}`);
+                    return csvToJson(file, result.data);
+            }) );
             
-            return matches;
+            console.log(data);
+            
+            return data;
         }
     );
 

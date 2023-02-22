@@ -15,4 +15,10 @@ const csvToJson = (/** @type string*/name, /** @type string*/ csv) => {
     return data
 }
 
+
+const txtToJson = (/** @type string*/name, /** @type string*/ csv) => {
+    
+};
+
+
 export default csvToJson

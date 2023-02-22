@@ -1,0 +1,5 @@
+BaMnO3.csv
+CaMnO3.csv
+Hex-SMO.csv
+Cubic-SrMnO3.csv
+Hex-YMO3.csv
