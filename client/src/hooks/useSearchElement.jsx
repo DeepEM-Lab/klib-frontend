@@ -1,19 +1,13 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import useSourceData from "./useSourceData";
-import csvToJson  from "../utils/csvToJson";
+import fileToJson  from "../utils/csvToJson";
 import { DataArray } from "@mui/icons-material";
 
 
 // added hook for searching feature
 const useSearchElement = (/**@type string */ element) => {
     const dataFiles = `${process.env.PUBLIC_URL}/search/fileindexes.txt`;
-
-    const readData = async (/**@type string*/ fileName) => {
-        // create regular express
-        let res = await axios.get(`${process.env.PUBLIC_URL}/data/${fileName}`);
-        return csvToJson(fileName, res.data);
-    }
 
     // only matching element symbols for now...
     const regex = new RegExp(`^${element}`);
@@ -34,16 +28,16 @@ const useSearchElement = (/**@type string */ element) => {
                     matches.push(file);
             });
 
-            // TODO: test for sending request --> for Ba and Fe
-
+            // wait on all promises to be handled to get final data we need
             const data = await Promise.all( matches.map( async (file) => {
                     let result = await axios.get(`${process.env.PUBLIC_URL}/data/${file}`);
-                    return csvToJson(file, result.data);
+                    return fileToJson(file, result.data);
             }) );
             
-            console.log(data);
+            const result = [matches, data];
+            // console.log(result);
             
-            return data;
+            return result;
         }
     );
 

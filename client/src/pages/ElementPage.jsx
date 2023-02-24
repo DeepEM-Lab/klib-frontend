@@ -16,7 +16,7 @@ function ElementPage() {
     const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
     // @ts-ignore
     const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
-    let dataLabels = ["BaMnO3", "CaMnO3", "Cubic-SrMnO3", "Hex-SMO", "Hex-YMnO3", "LaMnO3"]
+    // let dataLabels = ["BaMnO3", "CaMnO3", "Cubic-SrMnO3", "Hex-SMO", "Hex-YMnO3", "LaMnO3"]
 
     let matchedSubstances = useSearchElement(elementSymbol);
 
@@ -35,7 +35,9 @@ function ElementPage() {
     // let data = queryObjs.map(e => e.data ?? [])
 
     let researchResult = matchedSubstances.isSuccess;
-    let data = matchedSubstances.data ?? [];
+    let returnedData = matchedSubstances.data ?? [];
+    let /** @type{x: Number, y: Number, name: string}[][] */ data = returnedData.length !== 0 ? returnedData[1] : [];
+    let /** @type string[] */ dataLabels = returnedData.length !== 0 ? returnedData[0] : [];
 
     // console.log(matchedFiles);
 
