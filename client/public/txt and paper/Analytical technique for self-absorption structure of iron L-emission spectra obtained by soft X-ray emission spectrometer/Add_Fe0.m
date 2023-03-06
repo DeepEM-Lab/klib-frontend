@@ -1,0 +1,13 @@
+close all;
+data = readmatrix('Fe.txt');
+i = 4;
+j = 16;
+[xa,ya] = align_spec(710.38,data);
+Fe0_data(i).x = xa-Fe_info(j).DeltaE_0;
+Fe0_data(i).y = ya;
+plot(Fe0_data(i).x,ya);
+Fe0_data(i).tech = 'X-ray';
+currentdirectory = pwd;
+name = split(currentdirectory,'\');
+name = name{length(name)};
+Fe0_data(i).name = name;
