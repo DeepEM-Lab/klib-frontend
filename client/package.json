@@ -1,7 +1,6 @@
 {
     "name": "client",
     "version": "0.1.0",
-    "homepage": "https://deepem-lab.github.io/klib-frontend",
     "private": true,
     "dependencies": {
         "@ant-design/plots": "^1.2.3",
