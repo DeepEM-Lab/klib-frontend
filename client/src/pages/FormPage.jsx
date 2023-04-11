@@ -8,6 +8,9 @@ const FormPage = () => {
     const [isOpen, setIsOpen] = useState(false);
 	const [elementList, setElement] = useState(0);
 
+	// function onclick(name){
+	// 	setElement(name);
+	// }
 
 	const buttonNames = ["K",  "Ca",  "Sc",  
 	"Ti",  "V",  "Cr",  "Mn",  "Fe",  "Co",  "Ni",  "Cu",  "Zn",  "Ga",  "Ge",  "As",  
@@ -26,6 +29,7 @@ const FormPage = () => {
 	const buttonNames4 = ["La",  "Ce",  "Pr",  "Nd",  "Pm",  "Sm",  "Eu",  "Gd",  "Tb",  "Dy",  "Ho",  "Er",  "Tm",  "Yb",  "Lu"];
 
 	const buttonNames5 = ["Ac",  "Th",  "Pa",  "U",  "Np",  "Pu",  "Am",  "Cm",  "Bk",  "Cf",  "Es",  "Fm",  "Md",  "No",  "Lr"];
+	
     function handleToggle() {
         setIsOpen(!isOpen);
     }
