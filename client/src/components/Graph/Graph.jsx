@@ -1,11 +1,12 @@
 // @ts-ignore
-import { Grid, Switch } from "@mui/material"
+import { Button, Grid, Switch } from "@mui/material"
 import { useState } from "react"
 import { G2, Line } from '@ant-design/plots';
 import { useParams } from "react-router-dom";
 import GraphToggles from "./GraphToggles";
 import { ElementInfo } from "../PeriodicTable/ElementInfo";
 import ZoomByAxis from "./ZoomByAxis";
+import { useNavigate } from "react-router-dom"
 
 const dragCfg = {
     start: [{ trigger: 'plot:mousedown', action: 'scale-translate:start' }],
@@ -74,6 +75,12 @@ const Graph = (
         }
     }
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/form`);
+    };
+
     return (
         <Grid container>
             <Grid item xs={2}>
@@ -92,8 +99,12 @@ const Graph = (
                     disabled={false}
                     onChange={() => setIsExpanded(!isExpanded)}//set line expansion
                 />
+                <Button onClick={() => handleClick()}>
+                    form
+                </Button>
 
             </Grid>
+            
             <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px", padding: "20px" }}>
                 <Line
                     data={dataUnpacked}

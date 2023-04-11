@@ -4,7 +4,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import React from "react";
 import ElementPage from "./pages/ElementPage";
 import HomePage from './pages/HomePage';
+
 import './App.css';
+import FormPage from "./pages/FormPage";
 
 
 
@@ -27,6 +29,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/element/:element" element={<ElementPage />} />
+                        <Route path="/form" element={<FormPage />}/>
                     </Routes>
                     <ReactQueryDevtools />
                 </QueryClientProvider>
