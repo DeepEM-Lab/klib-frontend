@@ -1,11 +1,12 @@
 // @ts-ignore
-import { G2, Line } from '@ant-design/plots';
-import { Grid, Switch } from "@mui/material"
+import { Button, Grid, Switch } from "@mui/material"
 import { useEffect, useState } from "react"
+import { G2, Line } from '@ant-design/plots';
 import { useParams } from "react-router-dom";
-import { ElementInfo } from "../PeriodicTable/ElementInfo";
 import GraphToggles from "./GraphToggles";
+import { ElementInfo } from "../PeriodicTable/ElementInfo";
 import ZoomByAxis from "./ZoomByAxis";
+import { useNavigate } from "react-router-dom"
 
 const dragCfg = {
     start: [{ trigger: 'plot:mousedown', action: 'scale-translate:start' }],
@@ -69,7 +70,6 @@ const Graph = (
     let [linesOn, setLinesOn] = useState(Array(AllDataSets.length).fill(true, 0, AllDataSets.length / 2))
 
     const dataSets = AllDataSets.filter((_, i) => linesOn[i])
-    
 
     let dataUnpacked = unpackDataSets(dataSets)
     if (isExpanded) {//Expand datasets, shifting each line up.
@@ -80,6 +80,12 @@ const Graph = (
             }
         }
     }
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/form`);
+    };
 
     return (
         <Grid container>
@@ -99,7 +105,12 @@ const Graph = (
                     disabled={false}
                     onChange={() => setIsExpanded(!isExpanded)}//set line expansion
                 />
+                <Button onClick={() => handleClick()}>
+                    form
+                </Button>
+
             </Grid>
+            
             <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px", padding: "20px" }}>
                 <Line
                     data={dataUnpacked}
