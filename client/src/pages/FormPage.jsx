@@ -61,7 +61,8 @@ const FormPage = () => {
 
             <fieldset>
                 <legend>Spectrum Description</legend>
-                <input type="hidden" id="eelsdb_spectra_upload_nonce" name="eelsdb_spectra_upload_nonce" value="86deac9ca7" /><input type="hidden" name="_wp_http_referer" value="/submit-data/" />			<div className="form-group">
+                <input type="hidden" id="eelsdb_spectra_upload_nonce" name="eelsdb_spectra_upload_nonce" value="86deac9ca7" /><input type="hidden" name="_wp_http_referer" value="/submit-data/" />			
+				<div className="form-group">
                     <label htmlFor="post_title" className="col-sm-3 col-lg-4 control-label required_label">Specimen Name</label>
                     <div className="col-sm-9 col-md-8 col-lg-5">
                         <input type="text" className="required form-control" id="eelsdb_spectra_post_title" name="eelsdb_spectra_post_title"  value="" placeholder="Specimen name"/>
@@ -267,6 +268,101 @@ const FormPage = () => {
             <div style={{ clear: 'both' }}></div>
         </div>}
     </div>} <Button onClick={() => handleToggle()}>Add Spectra Edge</Button>
+		</fieldset>
+
+		<fieldset>
+			<legend>Microscope Acquisition Details</legend>
+			{/* <input type="hidden" id="eelsdb_spectra_upload_nonce" name="eelsdb_spectra_upload_nonce" value="86deac9ca7" /><input type="hidden" name="_wp_http_referer" value="/submit-data/" />			 */}
+			<div>
+				<label>Microscope Name/Model</label>
+				<div>
+					<input/>
+				</div>
+            </div>
+			<div>
+				<label>Gun Type</label>
+				<div>
+					<input/>
+				</div>
+            </div>
+			<div>
+				<label>Incident Beam Energy</label>
+				<div>
+					<input placeholder="in kV"/>
+				</div>
+            </div>
+			<div>
+				<label>Resolution</label>
+				<div>
+					<input placeholder="in eV"/>
+				</div>
+            </div>
+			<div>
+				<label>Monochromated</label>
+				<div>
+					<select name="monochromated" id="monochromated">
+						<option value="" selected>Select</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<label>Acquisition Mode</label>
+				<div>
+					<select name="monochromated" id="monochromated">
+						<option value="" selected>Select</option>
+						<option value="imagine">Imaging</option>
+						<option value="diffraction">Diffraction</option>
+						<option value="stem">STEM</option>
+						<option value="xas electron yield">XAS Electron Yield</option>
+						<option value="xas transmission">XAS Transmission</option>
+						<option value="fluorescence">Fluorescence</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<label>Convergence Semi-angle</label>
+				<div>
+					<input placeholder="in mrad"/>
+				</div>
+            </div>
+			<div>
+				<label>Collection Semi-angle</label>
+				<div>
+					<input placeholder="in mrad"/>
+				</div>
+            </div>
+			<div>
+				<label>Probe Size</label>
+				<div>
+					<input placeholder="in nm²"/>
+				</div>
+            </div>
+			<div>
+				<label>Beam Current</label>
+				<div>
+					<input/>
+				</div>
+            </div>
+			<div>
+				<label>Integration Time</label>
+				<div>
+					<input placeholder="in secs"/>
+				</div>
+            </div>
+			<div>
+				<label>Number of Readouts</label>
+				<div>
+					<input/>
+				</div>
+            </div>
+			<div>
+				<label>Detector</label>
+				<div>
+					<input/>
+				</div>
+            </div>
 		</fieldset>
 
 {/*
