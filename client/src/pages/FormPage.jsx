@@ -1,38 +1,77 @@
-import { Box, Button, Grid, Paper, Typography} from "@mui/material"
-import { useState } from "react";
+import { Box, Button, Grid, MenuItem, Paper, Select, Typography} from "@mui/material"
+import { useEffect, useState } from "react";
 import PeriodicTable from "../components/PeriodicTable/PeriodicTable"
 import PageParent from "../structures/PageParent"
+import Papa from 'papaparse';
 
 const FormPage = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
-	const [elementList, setElement] = useState(0);
+    // const [isOpen, setIsOpen] = useState(false);
+	// const [elementList, setElement] = useState([]);
 
-	// function onclick(name){
-	// 	setElement(name);
-	// }
+	// TODO: fix typing
+	// @ts-ignore
+	// const onClick = (name) => {
+	// 	// setElement([...name, name]);
+	// 	// @ts-ignore
+	// 	setElement(old => [...old, name])
+	// 	// console.log(elementList);
+	// };
 
-	const buttonNames = ["K",  "Ca",  "Sc",  
-	"Ti",  "V",  "Cr",  "Mn",  "Fe",  "Co",  "Ni",  "Cu",  "Zn",  "Ga",  "Ge",  "As",  
-	"Se",  "Br",  "Kr"];
+	// useEffect(() => console.log(elementList), [elementList]);
+	// const [csvData, setCsvData] = useState([]);
 
-	const buttonNames1 = ["Rb",  "Sr",  "Y",  "Zr",  "Nb",  "Mo",  "Tc",  "Ru",  "Rh",  
-	"Pd",  "Ag",  "Cd",  "In",  "Sn",  "Sb",  "Te",  "I",  "Xe"];
+	// useEffect(() => {
+	//   const fetchData = async () => {
+	// 	const response = await fetch('/edge_data.csv');
+	// 	if (response.body){
+	// 		const reader = response.body.getReader();
+	// 		const result = await reader.read();
+	// 		const decoder = new TextDecoder('utf-8');
+	// 		const csv = decoder.decode(result.value);
+	// 		Papa.parse(csv, {
+	// 		header: true,
+	// 		complete: function (results) {
+	// 			setCsvData(results.data);
+	// 		},
+	// 		});
+	// 	}
+		
+		
+	//   };
+  
+	//   fetchData();
+	// }, []);
 
-	const buttonNames2 = ["Cs",  "Ba",  "La",  
-	"Hf",  "Ta",  "W",  "Re",  "Os",  "Ir",  "Pt",  "Au",  "Hg",  "Tl",  
-	"Pb",  "Bi",  "Po",  "At",  "Rn"];
+	// console.log(csvData);
+	const [selectedOption, setSelectedOption] = useState("");
+	const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
 
-	const buttonNames3 = ["Fr",  "Ra",  "Ac",  "Rf",  "Db",  
-	"Sg",  "Bh",  "Hs",  "Mt",  "Ds",  "Rg",  "Cn",  "Nh",  "Fl",  "Mc",  "Lv",  "Ts",  "Og"];
+	const handleOptionChange = (event) => {
+		setSelectedOption(event.target.value);
+	};
 
-	const buttonNames4 = ["La",  "Ce",  "Pr",  "Nd",  "Pm",  "Sm",  "Eu",  "Gd",  "Tb",  "Dy",  "Ho",  "Er",  "Tm",  "Yb",  "Lu"];
+	// const buttonNames = ["K",  "Ca",  "Sc",  
+	// "Ti",  "V",  "Cr",  "Mn",  "Fe",  "Co",  "Ni",  "Cu",  "Zn",  "Ga",  "Ge",  "As",  
+	// "Se",  "Br",  "Kr"];
 
-	const buttonNames5 = ["Ac",  "Th",  "Pa",  "U",  "Np",  "Pu",  "Am",  "Cm",  "Bk",  "Cf",  "Es",  "Fm",  "Md",  "No",  "Lr"];
+	// const buttonNames1 = ["Rb",  "Sr",  "Y",  "Zr",  "Nb",  "Mo",  "Tc",  "Ru",  "Rh",  
+	// "Pd",  "Ag",  "Cd",  "In",  "Sn",  "Sb",  "Te",  "I",  "Xe"];
+
+	// const buttonNames2 = ["Cs",  "Ba",  "La",  
+	// "Hf",  "Ta",  "W",  "Re",  "Os",  "Ir",  "Pt",  "Au",  "Hg",  "Tl",  
+	// "Pb",  "Bi",  "Po",  "At",  "Rn"];
+
+	// const buttonNames3 = ["Fr",  "Ra",  "Ac",  "Rf",  "Db",  
+	// "Sg",  "Bh",  "Hs",  "Mt",  "Ds",  "Rg",  "Cn",  "Nh",  "Fl",  "Mc",  "Lv",  "Ts",  "Og"];
+
+	// const buttonNames4 = ["La",  "Ce",  "Pr",  "Nd",  "Pm",  "Sm",  "Eu",  "Gd",  "Tb",  "Dy",  "Ho",  "Er",  "Tm",  "Yb",  "Lu"];
+
+	// const buttonNames5 = ["Ac",  "Th",  "Pa",  "U",  "Np",  "Pu",  "Am",  "Cm",  "Bk",  "Cf",  "Es",  "Fm",  "Md",  "No",  "Lr"];
 	
-    function handleToggle() {
-        setIsOpen(!isOpen);
-    }
+    // function handleToggle() {
+    //     setIsOpen(!isOpen);
+    // }
     return (
         <PageParent>
         {/* // <div className="row">
@@ -118,7 +157,21 @@ const FormPage = () => {
                 </div>
             </fieldset>
 
-            <fieldset className="hide-zero">
+			<fieldset>
+			<Select
+				labelId="demo-simple-select-label"
+				id="demo-simple-select"
+				value={selectedOption}
+				onChange={handleOptionChange}
+			>
+				{options.map((option) => (
+					<MenuItem key={option} value={option}>
+					{option}
+					</MenuItem>
+				))}
+			</Select>
+			</fieldset>
+            {/* <fieldset className="hide-zero">
                 <legend>Feature Identification</legend>
                     {isOpen && <div id="eelsdb_edges_added_edges">
                     <p>Click name to delete edge..</p>
@@ -167,7 +220,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={(e) => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -182,7 +235,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={() => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -197,7 +250,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={() => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -212,7 +265,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={() => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -228,7 +281,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={() => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -245,7 +298,7 @@ const FormPage = () => {
 								key={index}
 								// variant="contained"
 								// color="primary"
-								// onClick={() => onClick(name)}
+								onClick={() => onClick(name)}
 								// sx={{ m: 1 }}
 								>
 								{name}
@@ -267,7 +320,7 @@ const FormPage = () => {
             <div style={{ clear: 'both' }}></div>
         </div>}
     </div>} <Button onClick={() => handleToggle()}>Add Spectra Edge</Button>
-		</fieldset>
+		</fieldset> */}
 
 {/*
 		<fieldset id="microscope_acquiisition_details_fieldset">

@@ -24,8 +24,9 @@ const useSearchElement = (/**@type string */ element) => {
 
             // matching all files that contain certain element
             fileNames.forEach( (/**@type string */ file) => {
-                if (file.match(regex) != null)
-                    matches.push(file);
+                const filename = file.split("\r")[0];
+                if (filename.match(regex) != null)
+                    matches.push(filename);
             });
 
             // wait on all promises to be handled to get final data we need
