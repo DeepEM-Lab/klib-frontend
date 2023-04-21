@@ -2,13 +2,10 @@ import { Box, Button, FormControl, InputLabel, Grid, MenuItem, Paper, Select, Te
 import { useEffect, useState } from "react";
 import PeriodicTable from "../components/PeriodicTable/PeriodicTable"
 import PageParent from "../structures/PageParent"
-// import Papa from 'papaparse';
+import useEdgeData from "../hooks/useEdgeData";
 
-//notes: can only submit info in "About You" and "Spectrum Description" fieldset
 const FormPage = () => {
 
-	// useEffect(() => console.log(elementList), [elementList]);
-	// const [csvData, setCsvData] = useState([]);
 	let { isLoading, isError, data, error } = useEdgeData("edge_data.csv");
 	if (data == undefined){
 		data = [];
@@ -37,27 +34,6 @@ const FormPage = () => {
 
 	useEffect(() => console.log(textInfo), [textInfo]);
 	
-	// const buttonNames = ["K",  "Ca",  "Sc",  
-	// "Ti",  "V",  "Cr",  "Mn",  "Fe",  "Co",  "Ni",  "Cu",  "Zn",  "Ga",  "Ge",  "As",  
-	// "Se",  "Br",  "Kr"];
-
-	// const buttonNames1 = ["Rb",  "Sr",  "Y",  "Zr",  "Nb",  "Mo",  "Tc",  "Ru",  "Rh",  
-	// "Pd",  "Ag",  "Cd",  "In",  "Sn",  "Sb",  "Te",  "I",  "Xe"];
-
-	// const buttonNames2 = ["Cs",  "Ba",  "La",  
-	// "Hf",  "Ta",  "W",  "Re",  "Os",  "Ir",  "Pt",  "Au",  "Hg",  "Tl",  
-	// "Pb",  "Bi",  "Po",  "At",  "Rn"];
-
-	// const buttonNames3 = ["Fr",  "Ra",  "Ac",  "Rf",  "Db",  
-	// "Sg",  "Bh",  "Hs",  "Mt",  "Ds",  "Rg",  "Cn",  "Nh",  "Fl",  "Mc",  "Lv",  "Ts",  "Og"];
-
-	// const buttonNames4 = ["La",  "Ce",  "Pr",  "Nd",  "Pm",  "Sm",  "Eu",  "Gd",  "Tb",  "Dy",  "Ho",  "Er",  "Tm",  "Yb",  "Lu"];
-
-	// const buttonNames5 = ["Ac",  "Th",  "Pa",  "U",  "Np",  "Pu",  "Am",  "Cm",  "Bk",  "Cf",  "Es",  "Fm",  "Md",  "No",  "Lr"];
-	
-    // function handleToggle() {
-    //     setIsOpen(!isOpen);
-    // }
     return (
         <PageParent>
             <form
@@ -167,158 +143,8 @@ const FormPage = () => {
 				
 			</Select>
 			</fieldset>
-            {/* <fieldset className="hide-zero">
-                <legend>Feature Identification</legend>
-                    {isOpen && <div id="eelsdb_edges_added_edges">
-                    <p>Click name to delete edge..</p>
-                                </div>}
-                <div style={{ clear: 'both' }}></div>
-                {isOpen && <div id="edge_selection">
-        <div id="periodic_table_div">
-            <p>Select an element..</p>
-			
-            <table id="periodic_table">
-                <tbody>
-                    <tr>
-                        <td className="col1"><Button title="Hydrogen">H</Button></td>
-                        <td colSpan= {16} className="empty"></td>
-                        <td className="col3"><Button title="Helium">He</Button ></td>
-                    </tr>
-                    <tr>
-                        <td className="col1"><Button title="Lithium">Li</Button></td>
-                        <td className="col1"><Button title="Beryllium">Be</Button></td>
-                        <td colSpan={10} className="empty"></td>
-                        <td className="col3"><Button title="Boron">B</Button></td>
-                        <td className="col3"><Button title="Carbon">C</Button></td>
-                        <td className="col3"><Button title="Nitrogen">N</Button></td>
-                        <td className="col3"><Button title="Oxygen">O</Button></td>
-                        <td className="col3"><Button title="Fluorine">F</Button></td>
-                        <td className="col3"><Button title="Neon">Ne</Button></td>
-                        <td className="empty"></td>
-                    </tr>
-                    <tr>
-                        <td className="col1"><Button title="Sodium">Na</Button></td>
-                        <td className="col1"><Button title="Magnesium">Mg</Button></td>
-                        <td colSpan={10} className="empty"></td>
-                        <td className="col3"><Button title="Aluminium">Al</Button></td>
-                        <td className="col3"><Button title="Silicon">Si</Button></td>
-                        <td className="col3"><Button title="Phosphorus">P</Button></td>
-                        <td className="col3"><Button title="Sulfur">S</Button></td>
-                        <td className="col3"><Button title="Chlorine">Cl</Button></td>
-                        <td className="col3"><Button title="Argon">Ar</Button></td>
-                        <td className="empty"></td>
-                    </tr>
-                
-					<tr>					
-						{buttonNames.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={(e) => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}						
-					</tr>
-					<tr>					
-						{buttonNames1.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={() => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}						
-					</tr>
-					<tr>					
-						{buttonNames2.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={() => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}						
-					</tr>
-					<tr>					
-						{buttonNames3.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={() => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}						
-					</tr>
-                    <tr>
-                        <td colSpan={2} className="empty"></td>
-                        {buttonNames4.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={() => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}
-                        <td className="empty"></td>
-                    </tr>
-                    <tr>
-                        <td colSpan={2} className="empty"></td>
-                        {buttonNames5.map((name, index) => (
-							<td>
-							<Button
-								key={index}
-								// variant="contained"
-								// color="primary"
-								onClick={() => onClick(name)}
-								// sx={{ m: 1 }}
-								>
-								{name}
-							</Button>
-							</td>
-						))}
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        {isOpen && <div id="level_selection">
-            <button type="button" className="close">
-                <span aria-hidden="true">&times;</span>
-                <span className="sr-only">Close</span>
-            </button>
-            <p className="level_intro_text">Choose which level is present in the spectra.</p>
-            <div id="selected_element"><p id="el_symbol"></p><p id="el_name"></p></div>
-            <ul id="element_levels"></ul>
-            <div style={{ clear: 'both' }}></div>
-        </div>}
-    </div>} <Button onClick={() => handleToggle()}>Add Spectra Edge</Button>
-		</fieldset> */}
 
-<fieldset>
+		<fieldset>
 			<legend>Microscope Acquisition Details</legend>
 			{/* <input type="hidden" id="eelsdb_spectra_upload_nonce" name="eelsdb_spectra_upload_nonce" value="86deac9ca7" /><input type="hidden" name="_wp_http_referer" value="/submit-data/" />			 */}
 			<div>
@@ -331,6 +157,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -344,6 +171,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>				
@@ -360,6 +188,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
 				
             </div>
@@ -377,6 +206,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -391,6 +221,7 @@ const FormPage = () => {
 						// value={age}
 						label="Monochromated"
 						// onChange={handleChange}
+						name='info'
 					>
 						<MenuItem value={0}>False</MenuItem>
 						<MenuItem value={1}>True</MenuItem>
@@ -409,6 +240,7 @@ const FormPage = () => {
 						// value={age}
 						label="Acquisition Mode"
 						// onChange={handleChange}
+						name='info'
 					>
 						<MenuItem value="none">None</MenuItem>
 						<MenuItem value="imagine">Imaging</MenuItem>
@@ -434,6 +266,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -450,6 +283,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -466,6 +300,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -478,6 +313,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -494,6 +330,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -506,6 +343,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 			<div>
@@ -518,6 +356,7 @@ const FormPage = () => {
 						shrink: true,
 					}}
 					variant="outlined"
+					name='info'
 				/>
             </div>
 		</fieldset>
