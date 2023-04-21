@@ -2,62 +2,36 @@ import { Box, Button, Grid, MenuItem, Paper, Select, Typography} from "@mui/mate
 import { useEffect, useState } from "react";
 import PeriodicTable from "../components/PeriodicTable/PeriodicTable"
 import PageParent from "../structures/PageParent"
-import Papa from 'papaparse';
+import useEdgeData from "../hooks/useEdgeData";
 
 //notes: can only submit info in "About You" and "Spectrum Description" fieldset
 const FormPage = () => {
 
-    // const [isOpen, setIsOpen] = useState(false);
-	// const [elementList, setElement] = useState([]);
-
-	// TODO: fix typing
-	// @ts-ignore
-	// const onClick = (name) => {
-	// 	// setElement([...name, name]);
-	// 	// @ts-ignore
-	// 	setElement(old => [...old, name])
-	// 	// console.log(elementList);
-	// };
-
 	// useEffect(() => console.log(elementList), [elementList]);
 	// const [csvData, setCsvData] = useState([]);
-
-	// useEffect(() => {
-	//   const fetchData = async () => {
-	// 	const response = await fetch('/edge_data.csv');
-	// 	if (response.body){
-	// 		const reader = response.body.getReader();
-	// 		const result = await reader.read();
-	// 		const decoder = new TextDecoder('utf-8');
-	// 		const csv = decoder.decode(result.value);
-	// 		Papa.parse(csv, {
-	// 		header: true,
-	// 		complete: function (results) {
-	// 			setCsvData(results.data);
-	// 		},
-	// 		});
-	// 	}
-		
-		
-	//   };
-  
-	//   fetchData();
-	// }, []);
-
-	// console.log(csvData);
-
+	let { isLoading, isError, data, error } = useEdgeData("edge_data.csv");
+	if (data == undefined){
+		data = [];
+	}
+	console.log(data[0]);
 
 	//store form information	
 	const [textInfo, setTextInfo] = useState([]);
-	const addInfo = (newInfo) => {
+	const addInfo = (/** @type {any} */ newInfo) => {
 		setTextInfo(old => [...old, newInfo]);
 	};
 
 
 	const [selectedOption, setSelectedOption] = useState("");
 	const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+	/**
+	 * @param {{ element: string; edge: string; data: string; }} option
+	 */
+	function tempStr(option){
+		return option.element + '-' + option.edge + '(' + option.data + ')';
+	}
 
-	const handleOptionChange = (event) => {
+	const handleOptionChange = (/** @type {{ target: { value: import("react").SetStateAction<string>; }; }} */ event) => {
 		setSelectedOption(event.target.value);
 	};
 
@@ -88,6 +62,7 @@ const FormPage = () => {
         <PageParent>
             <form
 				onSubmit={(event) => {
+				setTextInfo([]);
 				event.preventDefault();
 				const newInfo = event.target.info;
 				Array.from(newInfo).map((i) => (
@@ -175,17 +150,21 @@ const FormPage = () => {
             </fieldset>
 
 			<fieldset>
+			<Box>Add Spectra Edge: </Box> 
 			<Select
 				labelId="demo-simple-select-label"
 				id="demo-simple-select"
+				name='info'
 				value={selectedOption}
 				onChange={handleOptionChange}
 			>
-				{options.map((option) => (
-					<MenuItem key={option} value={option}>
-					{option}
+				{data.map((option) => (
+					
+					<MenuItem key={tempStr(option)} value={tempStr(option)}>
+						{tempStr(option)}
 					</MenuItem>
 				))}
+				
 			</Select>
 			</fieldset>
             {/* <fieldset className="hide-zero">
