@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage';
 import './App.css';
 import FormPage from "./pages/FormPage";
 
-
+import BrowsePage from "./pages/BrowsePage";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -30,6 +30,7 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/element/:element" element={<ElementPage />} />
                         <Route path="/form" element={<FormPage />}/>
+                        <Route path="/browse" element={<BrowsePage />}/>
                     </Routes>
                     <ReactQueryDevtools />
                 </QueryClientProvider>
