@@ -16,7 +16,7 @@ function getRows(f, r){
     for (let i = 0; i < f.length; i++) {
         var temp = f[i].split('/')[3].split('.')[0];
         console.log(temp)
-        r.push({ id: i, spectrumTitle: temp});//field: fileNames[i].default.name, headerName: fileNames[})
+        r.push({ id: temp, spectrumTitle: temp});//field: fileNames[i].default.name, headerName: fileNames[})
     }
 }
 
