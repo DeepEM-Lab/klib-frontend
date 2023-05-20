@@ -10,6 +10,8 @@ import FormPage from "./pages/FormPage";
 
 import BrowsePage from "./pages/BrowsePage";
 
+import TestPage from "./pages/TestPage";
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -31,6 +33,7 @@ function App() {
                         <Route path="/element/:element" element={<ElementPage />} />
                         <Route path="/form" element={<FormPage />}/>
                         <Route path="/browse" element={<BrowsePage />}/>
+                        <Route path="/browse/test" element={<TestPage />} />
                     </Routes>
                     <ReactQueryDevtools />
                 </QueryClientProvider>

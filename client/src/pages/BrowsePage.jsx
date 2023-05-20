@@ -10,12 +10,12 @@ function importAll(r) {
     return r.keys().map(r);
 }
 //, false, /\.(txt)$/
-const fileNames = importAll(require.context('../../public/fake_files/'));
+const fileNames = importAll(require.context('../../public/data/'));
 
 function getRows(f, r){
     for (let i = 0; i < f.length; i++) {
         var temp = f[i].split('/')[3].split('.')[0];
-        console.log(temp)
+        // console.log(temp)
         r.push({ id: temp, spectrumTitle: temp});//field: fileNames[i].default.name, headerName: fileNames[})
     }
 }
@@ -45,6 +45,11 @@ const columns = [
     {
         field: 'spectrumTitle', 
         headerName: 'Spectrum Title', 
+        width: 300
+    },
+    {
+        field: 'preview', 
+        headerName: 'Preview', 
         width: 300
     },
     {
