@@ -1,7 +1,8 @@
 
 import { DataGrid } from "@mui/x-data-grid"
 import PageParent from "../structures/PageParent"
-
+import Preview from '../components/Browse/Preview';
+// import Graph from "../components/Graph/Graph";
 // import data from "/fake_files/"
 
 // var fs = require('fs');
@@ -16,7 +17,7 @@ function getRows(f, r){
     for (let i = 0; i < f.length; i++) {
         var temp = f[i].split('/')[3].split('.')[0];
         // console.log(temp)
-        r.push({ id: temp, spectrumTitle: temp});//field: fileNames[i].default.name, headerName: fileNames[})
+        r.push({ id: temp, spectrumTitle: temp, preview: temp});//field: fileNames[i].default.name, headerName: fileNames[})
     }
 }
 
@@ -48,9 +49,12 @@ const columns = [
         width: 300
     },
     {
-        field: 'preview', 
+        field: 'preview',
         headerName: 'Preview', 
-        width: 300
+        width: 300,
+        renderCell: (params) => (
+            <Preview value={params.value} />
+        )
     },
     {
         field: 'formula', 
@@ -81,29 +85,7 @@ const columns = [
         field: 'spectrumType', 
         headerName: 'Spectrum Type', 
         width: 150
-    }
-
-
-    // {
-    //     field: 'maxEnergy', 
-    //     headerName: 'Max Energy', 
-    //     width: 'auto'
-    // },
-    // {
-    //     field: 'resolution', 
-    //     headerName: 'Resolution', 
-    //     width: 'auto'
-    // },
-    // {
-    //     field: 'source&purity', 
-    //     headerName: 'Source & Purity', 
-    //     width: 'auto'
-    // },
-    // {
-    //     field: 'spectrumTitle', 
-    //     headerName: 'Spectrum Title', 
-    //     width: 'auto'
-    // },
+    },
 
   ];
 
@@ -133,7 +115,11 @@ const rows = [
 ];
 
 getRows(fileNames, rows);
-
+const getRowHeight = (params) => {
+    // Specify your logic to determine the row height based on the data
+    // For example, you can return a fixed height or calculate it dynamically
+    return 80; // Returning a fixed height of 50px
+  };
 const BrowsePage = () => {
     return (
         <PageParent>
@@ -144,6 +130,7 @@ const BrowsePage = () => {
                 <DataGrid
                     rows={rows}
                     columns={columns}
+                    // getRowHeight = {getRowHeight}
                     initialState={{
                         pagination: {
                           paginationModel: {
@@ -152,8 +139,10 @@ const BrowsePage = () => {
                         },
                     }}
                     pageSizeOptions={[5]}
+                    disableSelection
                     disableRowSelectionOnClick
-                    // checkboxSelection
+                    disableColumnSelectionOnClick
+                    disableCellSelectionOnClick
                 />
             </div>
         </PageParent>

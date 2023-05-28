@@ -1,59 +1,15 @@
-// import { useEffect, useState } from 'react';
-// import Papa from 'papaparse';
-
-// function TestPage () {
-//   const [data, setData] = useState(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch('/data/BaMnO3.csv');
-//         if (response.ok) {
-//           const csvData = await response.text();
-//           const parsedData = Papa.parse(csvData, { header: false }).data;
-//           setData(parsedData);
-//         } else {
-//           throw new Error('Error fetching data');
-//         }
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div>
-//       {data ? (
-//         <div>
-//           <h2>Data:</h2>
-//           <ul>
-//             {data.map((row, index) => (
-//               <li key={index}>{JSON.stringify(row)}</li>
-//             ))}
-//           </ul>
-//         </div>
-//       ) : (
-//         <p>Loading data...</p>
-//       )}
-//     </div>
-//   );
-// }
-// export default TestPage   
-// @ts-ignore
 import { Button, Grid, Switch } from "@mui/material"
 import { useEffect, useState } from "react"
 import { G2, Line } from '@ant-design/plots';
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 // import GraphToggles from "./GraphToggles";
 // import { ElementInfo } from "../PeriodicTable/ElementInfo";
-import ZoomByAxis from "../components/Graph/ZoomByAxis";
-import { useNavigate } from "react-router-dom"
+import ZoomByAxis from "../Graph/ZoomByAxis";
+import { useNavigate, useParams } from "react-router-dom"
 
-import PageParent from "../structures/PageParent";
-import useSearchElement from "../hooks/useSearchElement";
-import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
+import PageParent from "../../structures/PageParent";
+import useSearchElement from "../../hooks/useSearchElement";
+// import { ElementInfo } from "../PeriodicTable/ElementInfo";
 
 
 const dragCfg = {
@@ -102,10 +58,10 @@ const Graph = (
 }}
 */ props) => {
     const { dataSets: AllDataSets, dataLabels } = props
-    const params = useParams()
-    const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
+    // const params = useParams()
+    // const element = params['element'] ? params['element'].toLocaleLowerCase() : "hydrogen"
     // @ts-ignore
-    const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element]
+    // const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element]
 
     useEffect(() => {
         document.getElementsByTagName('canvas')[0].addEventListener('mousewheel', function (event) {
@@ -113,38 +69,40 @@ const Graph = (
         }, false);
     }, [])
 
-    let [isExpanded, setIsExpanded] = useState(false)
+    // let [isExpanded, setIsExpanded] = useState(false)
     //default show all lines. If AllDataSets have length of 6, then lines will be [true, true, true, true, true, true]
     // let [linesOn, setLinesOn] = useState(Array(AllDataSets.length).fill(true, 0, AllDataSets.length / 2))
 
     const dataSets = AllDataSets.filter((_, i) => true)
 
     let dataUnpacked = unpackDataSets(dataSets)
-    if (isExpanded) {//Expand datasets, shifting each line up.
-        dataUnpacked = []
-        for (let i = 0; i < dataSets.length; i++) {
-            for (let data of dataSets[i]) {
-                dataUnpacked.push({ ...data, y: data.y + i * 0.4, _y: data.y })
-            }
-        }
-    }
+    // if (isExpanded) {//Expand datasets, shifting each line up.
+    //     dataUnpacked = []
+    //     for (let i = 0; i < dataSets.length; i++) {
+    //         for (let data of dataSets[i]) {
+    //             dataUnpacked.push({ ...data, y: data.y + i * 0.4, _y: data.y })
+    //         }
+    //     }
+    // }
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate(`/form`);
-    };
+    // const handleClick = () => {
+    //     navigate(`/form`);
+    // };
 
     return (
         <Grid container>
-            
-            <Grid item xs={8} sx={{ height: isExpanded ? "700px" : "400px", border: "1px solid", borderRadius: "20px", padding: "20px" }}>
+            {/* , border: "1px solid", borderRadius: "20px", padding: "20px"  */}
+            <Grid item xs={8} sx={{height: 50}}> 
                 <Line
+                    
                     data={dataUnpacked}
                     xField="x"
                     yField="y"
                     seriesField="name"
                     smooth={false}
+                    legend={false}
                     xAxis={{
                         type: "linear", tickInterval: 2,
                         label: { formatter: (text) => parseInt(text).toString() },
@@ -175,35 +133,64 @@ const Graph = (
 // import { ElementInfo } from "../components/PeriodicTable/ElementInfo";
 // import Graph from "../components/Graph/Graph";
 
-function TestPage () {
-  const navigate = useNavigate();
-  // const params = useParams()
-  const element = 'BaMnO3'
-  // const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
-  let matchedSubstances = useSearchElement(element);
-  let researchResult = matchedSubstances.isSuccess;
-  let returnedData = matchedSubstances.data ?? [];
-  let /** @type{x: Number, y: Number, name: string}[][] */ data = returnedData.length !== 0 ? returnedData[1] : [];
-  let /** @type string[] */ dataLabels = returnedData.length !== 0 ? returnedData[0] : [];
+const Preview = ({ value }) => {
+    // const navigate = useNavigate();
+    // const params = useParams()
+    // const params = useParams()
 
-  return (
-    <PageParent>
-      <div>
-      {researchResult && <Graph dataSets={data} dataLabels={dataLabels} />}
-      </div>
-      {/* <div>
+    // const element = params['element'] ? params['element'] : "hydrogen"
 
-        <ul>
-          {data.map((row, index) => (
-            <li key={index}>{JSON.stringify(row)}</li>
-          ))}
-          {data.map((row) => (
-            <li>{JSON.stringify(row)}</li>
-          ))}
-        </ul>
-      </div> */}
-    </PageParent>
-  );
+    const element = value//'BaMnO3'
+    // element = 'hydrogen'
+    // const { atomicNumber, atomicMass, elementName, elementSymbol, elementType } = ElementInfo[element];
+    let matchedSubstances = useSearchElement(element);
+    let researchResult = matchedSubstances.isSuccess;
+    let returnedData = matchedSubstances.data ?? [];
+    let /** @type{x: Number, y: Number, name: string}[][] */ data = returnedData.length !== 0 ? returnedData[1] : [];
+    let /** @type string[] */ dataLabels = returnedData.length !== 0 ? returnedData[0] : [];
+
+    return (
+        // <PageParent>
+            <Grid style={{ height: '100%', width: '100%' }}>
+                {/* <div style={{ height: '10', width: '10' }}> */}
+                    {researchResult && <Graph dataSets={data} dataLabels={dataLabels} />}
+                {/* </div> */}
+            </Grid>
+        // {/* </PageParent> */}
+
+    );
 }
 
-export default TestPage
+export default Preview
+
+
+// import { DataGrid } from '@mui/x-data-grid';
+// import MyCustomComponent from './MyCustomComponent';
+
+// const columns = [
+//   { field: 'id', headerName: 'ID', width: 100 },
+//   { field: 'name', headerName: 'Name', width: 200 },
+//   { 
+//     field: 'customField',
+//     headerName: 'Custom Field',
+//     width: 200,
+//     renderCell: (params) => (
+//       <MyCustomComponent value={params.value} />
+//     ),
+//   },
+// ];
+
+// const rows = [
+//   { id: 1, name: 'John Doe', customField: 'Custom Value 1' },
+//   { id: 2, name: 'Jane Smith', customField: 'Custom Value 2' },
+// ];
+
+// function TestPage() {
+//   return (
+//     <div style={{ height: 400, width: '100%' }}>
+//       <DataGrid rows={rows} columns={columns} />
+//     </div>
+//   );
+// }
+
+// export default TestPage;
